@@ -1,0 +1,278 @@
+/*
+ * This file is part of LiquidBounce (https://github.com/CCBlueX/LiquidBounce)
+ *
+ * Copyright (c) 2015 - 2026 CCBlueX
+ *
+ * LiquidBounce is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * LiquidBounce is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with LiquidBounce. If not, see <https://www.gnu.org/licenses/>.
+ */
+package net.ccbluex.liquidbounce.utils.item.armor
+
+import net.ccbluex.fastutil.enumMapOf
+import net.ccbluex.liquidbounce.utils.item.EnchantmentValueEstimator
+import net.ccbluex.liquidbounce.utils.item.EnchantmentValueEstimator.WeightedEnchantment
+import net.ccbluex.liquidbounce.utils.item.armorToughness
+import net.ccbluex.liquidbounce.utils.item.armorValue
+import net.ccbluex.liquidbounce.utils.item.durability
+import net.ccbluex.liquidbounce.utils.item.equipmentSlot
+import net.ccbluex.liquidbounce.utils.item.getEnchantment
+import net.ccbluex.liquidbounce.utils.item.getEnchantmentCount
+import net.ccbluex.liquidbounce.config.types.list.Tagged
+import net.ccbluex.liquidbounce.utils.math.roundToDecimalPlaces
+import net.ccbluex.liquidbounce.utils.sorting.ComparatorChain
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.Enchantments
+import java.util.Comparator.comparing
+import java.util.Comparator.comparingDouble
+import java.util.Comparator.comparingInt
+
+/**
+ * Decides how [ArmorComparator] ranks armor pieces.
+ */
+enum class ArmorComparatorMode(override val tag: String) : Tagged {
+    /**
+     * The original, damage-model based ranking. It weighs every damage-reduction enchantment
+     * (Protection, Projectile-, Fire- and Blast Protection) into a single reduction value, using the
+     * toughness-aware 1.9+ damage formula. Kept for backwards compatibility and modern survival.
+     */
+    SMART("Smart"),
+
+    /**
+     * SkyWars/BedWars oriented ranking built on the legacy (1.8) armor model where one armor point is a
+     * flat 4% reduction with no toughness and no damage-strength scaling. Only relevant enchantments
+     * influence the choice (Protection always, Projectile Protection optionally). Niche enchantments
+     * (Fire/Blast Protection, Thorns, Unbreaking, ...) never out-weigh real defense - they only act as a
+     * final tie-breaker. This stops the module from picking, say, iron with high Fire Protection over
+     * plain diamond.
+     */
+    RAW_DEFENSE("RawDefense")
+}
+
+@JvmRecord
+data class ArmorParameter(val defensePoints: Float, val toughness: Float) {
+    companion object {
+        @JvmField
+        val ZERO = ArmorParameter(0f, 0f)
+    }
+}
+
+@JvmInline
+value class ArmorKitParameters private constructor(
+    private val slots: Map<EquipmentSlot, ArmorParameter>
+) {
+    fun getParametersForSlot(slotType: EquipmentSlot) = this.slots[slotType]!!
+
+    companion {
+        /**
+         * Returns for each slot the summed up armor parameters without that slot.
+         */
+        fun getParametersForSlots(currentKit: Map<EquipmentSlot, ArmorPiece?>): ArmorKitParameters {
+            // Sum up all parameters
+            val totalArmorKitParameters =
+                currentKit.values.fold(ArmorParameter.ZERO) { acc, armorPiece ->
+                    if (armorPiece != null) {
+                        ArmorParameter(
+                            acc.defensePoints + armorPiece.defensePoints,
+                            acc.toughness + armorPiece.toughness
+                        )
+                    } else {
+                        acc
+                    }
+                }
+
+            // Return the parameter sum for each slot without the current slot
+            return ArmorKitParameters(
+                currentKit.mapValuesTo(enumMapOf()) { (_, armorPiece) ->
+                    if (armorPiece != null) {
+                        ArmorParameter(
+                            totalArmorKitParameters.defensePoints - armorPiece.defensePoints,
+                            totalArmorKitParameters.toughness - armorPiece.toughness
+                        )
+                    } else {
+                        totalArmorKitParameters
+                    }
+                }
+            )
+        }
+    }
+}
+
+/**
+ * Compares armor pieces by their damage reduction.
+ *
+ * @property expectedDamage armor might have different damage reduction behaviour based on damage. Thus, the expected
+ * damage has to be provided.
+ * @property armorKitParametersForSlot armor (i.e. iron with Protection II vs plain diamond) behaves differently based
+ * on the other armor pieces. Thus, the expected defense points and toughness have to be provided. Since those are
+ * dependent on the other armor pieces, the armor parameters have to be provided slot-wise.
+ * @property durabilityThreshold the minimum durability an armor piece must have to be prioritized for use.
+ * If an armor piece's remaining durability is lower than this threshold,
+ * the piece is not prioritized anymore, and it can be replaced with another piece
+ * so that this piece can be preserved.
+ */
+class ArmorComparator(
+    private val expectedDamage: Float,
+    private val armorKitParametersForSlot: ArmorKitParameters,
+    private val durabilityThreshold : Int = Int.MIN_VALUE,
+    mode: ArmorComparatorMode = ArmorComparatorMode.SMART,
+    private val considerProjectileProtection: Boolean = true
+) : Comparator<ArmorPiece> {
+    companion object {
+        private val DAMAGE_REDUCTION_ESTIMATOR = EnchantmentValueEstimator(
+            WeightedEnchantment(Enchantments.PROTECTION, 1.2f * 0.04f),
+            WeightedEnchantment(Enchantments.PROJECTILE_PROTECTION, 0.4f * 0.08f),
+            WeightedEnchantment(Enchantments.FIRE_PROTECTION, 0.39f * 0.15f),
+            WeightedEnchantment(Enchantments.BLAST_PROTECTION, 0.38f * 0.08f),
+        )
+        private val OTHER_ENCHANTMENT_ESTIMATOR = EnchantmentValueEstimator(
+            WeightedEnchantment(Enchantments.FEATHER_FALLING, 3.0f),
+            WeightedEnchantment(Enchantments.THORNS, 1.0f),
+            WeightedEnchantment(Enchantments.RESPIRATION, 0.1f),
+            WeightedEnchantment(Enchantments.AQUA_AFFINITY, 0.05f),
+            WeightedEnchantment(Enchantments.UNBREAKING, 0.01f),
+        )
+
+        /**
+         * Legacy (1.8) armor model: one armor point reduces incoming damage by a flat 4%, capped at 80%.
+         * There is no toughness and no damage-strength scaling. The protection enchantments follow the same
+         * 4% per point, and their summed EPF is capped at 20, i.e. at the same 80%.
+         */
+        private const val LEGACY_REDUCTION_PER_POINT = 0.04f
+        private const val LEGACY_REDUCTION_CAP = 0.8f
+
+        /**
+         * Effective Protection Factor (EPF) modifiers used by the legacy enchantment-protection formula.
+         * Protection is weak per level, Projectile Protection has a higher modifier.
+         * See https://minecraft.wiki/w/Armor#Enchantments (pre-1.9 mechanics).
+         */
+        private const val PROTECTION_EPF_MODIFIER = 0.75f
+        private const val PROJECTILE_PROTECTION_EPF_MODIFIER = 1.5f
+        private const val EPF_REDUCTION_PER_POINT = 0.04f
+
+        private val SHARED_COMPARATOR = ComparatorChain(
+            comparing({ it.itemSlot.itemStack }, OTHER_ENCHANTMENT_ESTIMATOR),
+            comparingInt { it.itemSlot.itemStack.getEnchantmentCount() },
+            comparingInt { it.itemSlot.itemStack.get(DataComponents.ENCHANTABLE)?.value ?: 0 },
+            comparing(ArmorPiece::isAlreadyEquipped),
+            comparing(ArmorPiece::isReachableByHand),
+        )
+    }
+
+    // Both modes rank by damage reduction: the piece which prevents more damage has to compare as greater,
+    // as that is the one the armor evaluation picks with maxWithOrNull.
+    private val comparator = when (mode) {
+        ArmorComparatorMode.SMART -> smartComparator()
+        ArmorComparatorMode.RAW_DEFENSE -> rawDefenseComparator()
+    }
+
+    override fun compare(o1: ArmorPiece, o2: ArmorPiece): Int {
+        return this.comparator.compare(o1, o2)
+    }
+
+    private fun smartComparator() = ComparatorChain(
+        comparing { it.itemSlot.itemStack.durability > durabilityThreshold },
+        comparingDouble { getThresholdedDamageReduction(it.itemSlot.itemStack).roundToDecimalPlaces(3).toDouble() },
+        SHARED_COMPARATOR,
+    )
+
+    /**
+     * SkyWars/BedWars oriented ranking. The dominating criterion is the legacy total damage reduction
+     * (raw armor points plus only the relevant protection enchantments). Niche enchantments never out-rank
+     * real defense - they merely break ties.
+     */
+    private fun rawDefenseComparator() = ComparatorChain(
+        comparing { it.itemSlot.itemStack.durability > durabilityThreshold },
+        comparingDouble { getLegacyDamageReduction(it.itemSlot.itemStack).roundToDecimalPlaces(4).toDouble() },
+        comparingInt { it.itemSlot.itemStack.getEnchantment(Enchantments.PROTECTION) },
+        SHARED_COMPARATOR,
+    )
+
+    /**
+     * Damage reduction this piece contributes under the legacy (1.8) armor model: its own armor points on top
+     * of the rest of the kit, plus its own protection enchantments.
+     *
+     * Armor points give a flat 4% each (capped at 80%) and only [Enchantments.PROTECTION] - plus
+     * [Enchantments.PROJECTILE_PROTECTION] while [considerProjectileProtection] is enabled - reduce the damage
+     * further. Fire/Blast Protection and any non-defensive enchantments are ignored on purpose so they can never
+     * beat actual armor points.
+     *
+     * 1.8.9: net.minecraft.entity.EntityLivingBase#applyArmorCalculations
+     * 1.8.9: net.minecraft.entity.EntityLivingBase#applyPotionDamageCalculations
+     */
+    fun getLegacyDamageReduction(itemStack: ItemStack): Float {
+        val parameters = this.armorKitParametersForSlot.getParametersForSlot(itemStack.equipmentSlot!!)
+        val totalArmorPoints = parameters.defensePoints + itemStack.armorValue.toFloat()
+
+        val armorReduction = (totalArmorPoints * LEGACY_REDUCTION_PER_POINT).coerceAtMost(LEGACY_REDUCTION_CAP)
+
+        // Both enchantments add up into a single EPF, which is capped before it reduces the damage once.
+        // 1.8.9: net.minecraft.enchantment.EnchantmentHelper#getEnchantmentModifierDamage
+        var epf = legacyEpf(itemStack.getEnchantment(Enchantments.PROTECTION), PROTECTION_EPF_MODIFIER)
+        if (considerProjectileProtection) {
+            val projectileLevel = itemStack.getEnchantment(Enchantments.PROJECTILE_PROTECTION)
+            epf += legacyEpf(projectileLevel, PROJECTILE_PROTECTION_EPF_MODIFIER)
+        }
+
+        val enchantReduction = (epf * EPF_REDUCTION_PER_POINT).coerceAtMost(LEGACY_REDUCTION_CAP)
+
+        // Armor and enchantments are applied one after the other, each with its own 80% ceiling, so the
+        // combined reduction is not capped at 80% and can reach 96%.
+        return 1f - (1f - armorReduction) * (1f - enchantReduction)
+    }
+
+    /**
+     * EPF a protection enchantment level contributes under the legacy formula.
+     *
+     * 1.8.9: net.minecraft.enchantment.EnchantmentProtection#calcModifierDamage
+     */
+    private fun legacyEpf(level: Int, modifier: Float): Int {
+        if (level <= 0) {
+            return 0
+        }
+
+        return Math.floor(((6 + level * level) * modifier / 3.0)).toInt()
+    }
+
+    /**
+     * Damage reduction of a piece (together with the rest of the kit) under the modern damage model: the
+     * complement of the damage the piece leaves over. Higher is better, like [getLegacyDamageReduction].
+     */
+    private fun getThresholdedDamageReduction(itemStack: ItemStack): Float {
+        val parameters = this.armorKitParametersForSlot.getParametersForSlot(itemStack.equipmentSlot!!)
+
+        val damageFactor = getDamageFactor(
+            damage = expectedDamage,
+            defensePoints = parameters.defensePoints + itemStack.armorValue.toFloat(),
+            toughness = parameters.toughness + itemStack.armorToughness.toFloat()
+        ) * (1 - DAMAGE_REDUCTION_ESTIMATOR.estimateValue(itemStack))
+
+        // getDamageFactor returns the damage that is taken, so invert it into the damage that is prevented.
+        return 1f - damageFactor
+    }
+
+    /**
+     * Calculates the base damage factor (totalDamage = damage x damageFactor).
+     *
+     * See https://minecraft.fandom.com/wiki/Armor#Mechanics.
+     *
+     * @param damage the expected damage (the damage reduction depends on the dealt damage)
+     */
+    fun getDamageFactor(damage: Float, defensePoints: Float, toughness: Float): Float {
+        val f = 2.0f + toughness / 4.0f
+        val g = Math.clamp(defensePoints - damage / f, defensePoints * 0.2f, 20.0f)
+
+        return 1.0f - g / 25.0f
+    }
+}
