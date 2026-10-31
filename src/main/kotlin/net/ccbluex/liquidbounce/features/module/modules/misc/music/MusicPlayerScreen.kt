@@ -17,7 +17,6 @@ import kotlin.math.min
  */
 class MusicPlayerScreen(
     private val engine: MusicPlayerEngine,
-    private val onCloseCallback: () -> Unit,
 ) : Screen(Component.literal("Music")) {
 
     private val io = Executors.newSingleThreadExecutor { r ->
@@ -74,8 +73,10 @@ class MusicPlayerScreen(
         selected = selected.coerceIn(0, max(0, results.size - 1))
     }
 
-    // 26.3 部分映射下 Screen.render 签名与 GuiGraphicsExtractor 不一致时，用 renderBackground 画 UI
-    override fun renderBackground(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, delta: Float) {
+    // Minecraft 26.3 extracts the screen background before the screen render state.
+    // Keep the vanilla panorama / in-game background, then draw the dim layer and player UI.
+    override fun extractBackground(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, delta: Float) {
+        super.extractBackground(graphics, mouseX, mouseY, delta)
         recomputeLayout()
         graphics.fill(0, 0, width, height, Md3Theme.withAlpha(0xFF000000.toInt(), 140))
 
@@ -188,7 +189,7 @@ class MusicPlayerScreen(
         }
         when (key) {
             Key.ESCAPE -> {
-                onCloseCallback()
+                onClose()
                 return true
             }
             Key.ENTER, Key.KP_ENTER -> {
@@ -263,7 +264,6 @@ class MusicPlayerScreen(
 
     override fun onClose() {
         io.shutdownNow()
-        onCloseCallback()
         super.onClose()
     }
 
