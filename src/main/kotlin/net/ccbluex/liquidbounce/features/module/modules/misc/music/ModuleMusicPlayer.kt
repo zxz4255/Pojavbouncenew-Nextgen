@@ -28,11 +28,7 @@ object ModuleMusicPlayer : ClientModule("MusicPlayer", ModuleCategories.MISC) {
     }
 
     private fun openScreen() {
-        mc.setScreen(
-            MusicPlayerScreen(engine) {
-                mc.setScreen(null)
-            },
-        )
+        mc.gui.setScreen(MusicPlayerScreen(engine))
     }
 
     @Suppress("unused")
