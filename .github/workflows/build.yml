@@ -1,0 +1,83 @@
+name: Build
+
+on:
+  push:
+    branches: [ nextgen, '26.3(new)' ]
+  pull_request:
+    branches: [ nextgen, '26.3(new)' ]
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+jobs:
+  extract-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      jdk_version: ${{ steps.versions.outputs.jdk_version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Extract versions
+        id: versions
+        run: |
+          set -euo pipefail
+
+          function tomlprop {
+            local key="$1"
+            local value=$(grep "^${key}[[:space:]]*=" gradle/libs.versions.toml | head -n1 | sed -n 's/^[^=]*=[[:space:]]*"\([^"]*\)".*/\1/p')
+            if [ -z "$value" ]; then
+              echo "[ERROR] tomlprop: '${key}' not found or blank in gradle/libs.versions.toml" >&2
+              exit 1
+            fi
+            echo "$value"
+          }
+
+          JDK_VERSION=$(tomlprop 'jdk')
+
+          echo "jdk_version=$JDK_VERSION" >> "$GITHUB_OUTPUT"
+          echo "JDK: $JDK_VERSION"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: extract-versions
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Cache npm dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('src-theme/package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+      - name: Setting up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ needs.extract-versions.outputs.jdk_version }}
+      - name: Grant permissions to src-theme
+        run: sudo chmod -R 777 src-theme
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/nextgen' && github.ref != 'refs/heads/26.3(new)' }}
+      - name: Build
+        env:
+          CI: true
+        run: |
+          chmod +x gradlew
+          ./gradlew build -x test -x detekt
+      - name: List build outputs
+        run: |
+          echo "=== build/libs ==="
+          find build/libs -type f || true
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: liquidbounce-build
+          path: |
+            build/libs/*.jar
+          if-no-files-found: error
+          retention-days: 14
