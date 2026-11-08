@@ -1,0 +1,125 @@
+name: Build
+
+on:
+  push:
+    branches: [ nextgen, '26.3(new)' ]
+  pull_request:
+    branches: [ nextgen, '26.3(new)' ]
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+# A newer run on the same ref cancels the older one.
+# Caching detail: a cancelled Job still restores the cache but never saves it, and running
+# several builds at once means several multi-GB Gradle User Home entries fighting for the
+# same 10 GB repo quota - which evicts exactly the entries the next build wants to restore.
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'release' }}
+
+jobs:
+  extract-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      jdk_version: ${{ steps.versions.outputs.jdk_version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Extract versions
+        id: versions
+        run: |
+          set -euo pipefail
+
+          function tomlprop {
+            local key="$1"
+            local value=$(grep "^${key}[[:space:]]*=" gradle/libs.versions.toml | head -n1 | sed -n 's/^[^=]*=[[:space:]]*"\([^"]*\)".*/\1/p')
+            if [ -z "$value" ]; then
+              echo "[ERROR] tomlprop: '${key}' not found or blank in gradle/libs.versions.toml" >&2
+              exit 1
+            fi
+            echo "$value"
+          }
+
+          JDK_VERSION=$(tomlprop 'jdk')
+
+          echo "jdk_version=$JDK_VERSION" >> "$GITHUB_OUTPUT"
+          echo "JDK: $JDK_VERSION"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: extract-versions
+    timeout-minutes: 60
+    env:
+      CI: true
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Set up Node.js (npm cache)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          # `buildTheme` runs `npm ci` in src-theme on every build; this caches ~/.npm
+          # (content-addressed tarballs), so `npm ci` skips the network.
+          cache: npm
+          cache-dependency-path: src-theme/package-lock.json
+
+      - name: Setting up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ needs.extract-versions.outputs.jdk_version }}
+
+      - name: Grant permissions to src-theme
+        run: sudo chmod -R 777 src-theme
+
+      # Restores Gradle User Home at the start of the job and writes it back in the post step
+      # (also when the build fails, as long as the job is not cancelled).
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          # false = every run writes the cache back, so the next build restores it.
+          # Default is `true` for anything that is not the repo's default branch.
+          cache-read-only: false
+          # Drop files Gradle no longer references before saving: smaller entry,
+          # faster restore, less chance of eviction.
+          gradle-home-cache-cleanup: true
+          # `caches` + `notifications` are cached by default; add JDK toolchains so Gradle
+          # does not re-download them when auto-provisioning kicks in.
+          gradle-home-cache-includes: |
+            caches
+            notifications
+            jdks
+
+      # The Gradle User Home cache does not cover the project-local configuration cache
+      # (`org.gradle.configuration-cache=true`). Gradle validates every entry against its
+      # inputs, so a stale restore is simply discarded - restoring blindly by SHA is safe.
+      - name: Cache Gradle configuration cache
+        uses: actions/cache@v5
+        with:
+          path: .gradle/configuration-cache
+          key: gradle-cc-v1-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            gradle-cc-v1-${{ runner.os }}-
+
+      - name: Build
+        run: |
+          chmod +x gradlew
+          ./gradlew build -x test -x detekt --build-cache
+
+      - name: List build outputs
+        run: |
+          echo "=== build/libs ==="
+          find build/libs -type f || true
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: liquidbounce-build
+          path: |
+            build/libs/*.jar
+          if-no-files-found: error
+          retention-days: 14
