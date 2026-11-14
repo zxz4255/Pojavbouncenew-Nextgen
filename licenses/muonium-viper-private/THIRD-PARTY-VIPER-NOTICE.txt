@@ -1,0 +1,31 @@
+Muonium ViPER DSP — provenance and unresolved third-party conditions
+
+The Java DSP sources under src/main/java/com/muoniumplayer/core/viper/dsp/ and
+src/main/java/com/muoniumplayer/core/jdsp/JdspReverb.java were copied from
+https://github.com/zihe114514/MuoniumPlayer-multiversion (user-provided source archive).
+The Muonium project provides an Apache 2.0 LICENSE and NOTICE; copies are alongside this notice.
+Those project-level notices do not by themselves establish rights for every upstream component.
+The original file headers expressly identify the ViPERDSP port as reverse-engineered and based
+on a personal, non-commercial use premise. Upstream ViPERDSP's README states:
+
+"Original work: Zhuhang and ViPER520 (ViPER4Android)
+Reverse engineering: Martmists, Iscle and likelikeslike (AndroidAudioMods/ViPERFX_RE and
+likelikeslike/ViPERFX_RE). This is reverse-engineered code. The original intellectual property
+belongs to Zhuhang and ViPER520. The AndroidAudioMods/ViPERFX_RE project carries no license
+and it treated as All Rights Reserved. This project is provided for personal use only. It must
+not be used for any commercial purpose."
+Source: https://github.com/likelikeslike/ViPERDSP (Credits and Legal Notice).
+
+JdspReverb.java identifies its source as JamesDSPManager reverb.c / Sean Connelly sndfilter
+and describes a JamesDSP MIT-licensed modification. Actual rights and license compatibility
+of the precise upstream versions have not been independently established. Preserve its file
+header. Do not infer that the DSP is GPL or Apache solely because the surrounding project is.
+This private non-commercial integration is not a grant of third-party redistribution rights.
+Do not publish, upload to a public repository/release, or commercially distribute this package
+without first obtaining and checking all necessary permissions and license compatibility.
+The included GitHub workflow can publish release ZIPs: do not publish this private variant.
+
+VHE resource tables at src/main/resources/com/muoniumplayer/viper/vhe/ are copied unchanged
+from the same user-provided Muonium source archive. Muonium ViperBuiltin.java describes the
+VHE tables as personal-use resources. Independent license/redistribution authorization for
+these tables has not been established; the restrictions and warnings above also apply.

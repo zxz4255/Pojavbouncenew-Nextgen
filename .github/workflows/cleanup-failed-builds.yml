@@ -1,0 +1,85 @@
+name: Clean failed workflow runs
+
+# Must be present on the default branch. Deletion permanently removes logs and artifacts.
+# Known workflows trigger prompt cleanup; the scheduled sweep also covers older runs,
+# newly added workflows, and this cleanup workflow itself if it fails.
+on:
+  workflow_run:
+    workflows:
+      - Build
+      - generate-dokka-html.yml
+      - Issue Labeler
+      - Close stale issues and PRs
+      - Sync LiquidBounce Theme Repository
+    types: [completed]
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  delete-failed-runs:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'failure' &&
+       github.event.workflow_run.repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait 10 minutes for the triggering failure
+        if: github.event_name == 'workflow_run'
+        shell: bash
+        run: sleep 600
+
+      - name: Delete runs still failed after 10 minutes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          failed=0
+          check_and_delete() {
+            local id="$1" expected_attempt="$2" state status conclusion attempt updated timestamp now
+            [[ "$id" =~ ^[0-9]+$ && "$expected_attempt" =~ ^[1-9][0-9]*$ ]] || {
+              echo 'Invalid workflow run ID or attempt' >&2; return 1;
+            }
+            if ! state=$(gh api "repos/$GH_REPO/actions/runs/$id" \
+              --jq '[.status, .conclusion, .run_attempt, .updated_at] | @tsv'); then
+              echo "Could not recheck run $id; it may already have been deleted." >&2
+              return 1
+            fi
+            IFS=$'\t' read -r status conclusion attempt updated <<< "$state"
+            if [[ "$status" != completed || "$conclusion" != failure || "$attempt" != "$expected_attempt" ]]; then
+              echo "Skipping run $id: status, conclusion or attempt changed."
+              return 0
+            fi
+            timestamp=$(date -u -d "$updated" +%s) || return 1
+            now=$(date -u +%s)
+            if (( now - timestamp < 600 )); then
+              echo "Skipping run $id: last update was less than 10 minutes ago."
+              return 0
+            fi
+            gh api --method DELETE "repos/$GH_REPO/actions/runs/$id" || return 1
+            echo "Deleted failed run $id (including logs and artifacts)."
+          }
+          if [[ "$EVENT_NAME" == workflow_run ]]; then
+            check_and_delete "$RUN_ID" "$RUN_ATTEMPT"
+          else
+            candidates=$(mktemp)
+            trap 'rm -f "$candidates"' EXIT
+            # Includes all workflow names, including workflows added later.
+            gh api --method GET --paginate "repos/$GH_REPO/actions/runs" \
+              -f status=failure -f per_page=100 \
+              --jq '.workflow_runs[] | [.id, .run_attempt] | @tsv' > "$candidates"
+            while IFS=$'\t' read -r id attempt; do
+              [[ -n "$id" ]] || continue
+              check_and_delete "$id" "$attempt" || failed=1
+            done < "$candidates"
+            exit "$failed"
+          fi
