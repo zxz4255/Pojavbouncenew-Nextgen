@@ -1,0 +1,12 @@
+{
+  "notification_toggle_enable": {
+    "sounds": [
+      "liquidbounce:notification_toggle_enable"
+    ]
+  },
+  "notification_toggle_disable": {
+    "sounds": [
+      "liquidbounce:notification_toggle_disable"
+    ]
+  }
+}
