@@ -1,0 +1,45 @@
+{
+  "baseline": "082",
+  "baseline_sha256": "26b08ebf9ea877f2504852da4183ad76bb069a7ac99545ad152cf99fcc3ce1a2",
+  "baseline_files": 2606,
+  "changed": [
+    {
+      "path": "src/main/java/net/ccbluex/liquidbounce/injection/mixins/minecraft/client/MixinGui.java",
+      "before": "91796b7b7bb8411e5f8e07a3f265bb8f0726fbaa1e21238fe7e9143f6de352c4",
+      "after": "cd0fa706f55ee6a699be2f59600a8516e0711045dfd76fa80ccd3f2291d8e418"
+    },
+    {
+      "path": "src/main/java/net/ccbluex/liquidbounce/injection/mixins/minecraft/client/MixinMouseHandler.java",
+      "before": "ceb63c4fde3050f4bc332d7caed27c7a6b9c8a2e867edde2b764c838321e4b14",
+      "after": "e7b1d79d615be434d1fd1e4405a658d137b83498c09946d5287a73446bcc3f45"
+    },
+    {
+      "path": "src/main/java/net/ccbluex/liquidbounce/injection/mixins/minecraft/item/MixinItem.java",
+      "before": "d2f586d4edf88e85f834c0a3a2c69cde9ca9c3eb2d67f8f95855d11e4179512d",
+      "after": "5d203bc42b016c9abe62838f5284cd8e3570a0561c37d22883443fea6324f181"
+    }
+  ],
+  "identical_count": 2603,
+  "deleted": [],
+  "added": [
+    "083-ANDROID-CURSOR-LEGACY-BLOCK.md",
+    "scripts/verify083/ApiAudit.java",
+    "scripts/verify083/InputRegression.java",
+    "scripts/verify083/NoViaRegression.java",
+    "scripts/verify083/README.md",
+    "scripts/verify083/audit-package.py",
+    "scripts/verify083/fixtures.py",
+    "scripts/verify083/prepare.py",
+    "scripts/verify083/results.txt",
+    "scripts/verify083/retained081-results.txt",
+    "scripts/verify083/retained082-results.txt",
+    "scripts/verify083/run.sh",
+    "scripts/verify083/scope-audit.json",
+    "scripts/verify083/source-lock.json",
+    "src/main/java/net/ccbluex/liquidbounce/utils/input/AndroidGuiCursor.java",
+    "src/main/java/net/ccbluex/liquidbounce/utils/item/LegacySwordBlocking.java"
+  ],
+  "packaged_count": 2622,
+  "excluded_generated": [],
+  "protected": "Every082 file other than three named existing input/item mixins is byte-identical; no module/config/schema changes;082 Regex fix,081 music/online keys,080 Neo fixes, knife/inventory/chest preserved."
+}

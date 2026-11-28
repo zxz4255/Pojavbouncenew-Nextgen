@@ -1,0 +1,35 @@
+{
+  "baseline_sha256": "209dd3861e35dbaf73bb248c462223821712149b082ba816382707e6cc47f7cb",
+  "baseline_files": 2686,
+  "modified_files": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/ModuleManager.kt",
+    "src/main/resources/resources/liquidbounce/lang/en_us.json",
+    "src/main/resources/resources/liquidbounce/lang/zh_cn.json",
+    "src/main/resources/resources/liquidbounce/lang/zh_cn_ui.json"
+  ],
+  "modified_count": 4,
+  "identical_baseline_files": 2682,
+  "added_files": [
+    "088-CS2-MVP-BANNER.md",
+    "licenses/cs2mvp088/SOURCES.md",
+    "licenses/cs2mvp088/source-spec.json",
+    "scripts/verify088/README.md",
+    "scripts/verify088/Regression.kt",
+    "scripts/verify088/audit-package.py",
+    "scripts/verify088/check-wiring.py",
+    "scripts/verify088/hosts.py",
+    "scripts/verify088/results.txt",
+    "scripts/verify088/run.sh",
+    "scripts/verify088/scope-audit.json",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/cs2mvp/Cs2MvpRenderer.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/cs2mvp/Cs2MvpState.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/cs2mvp/ModuleCs2Mvp.kt"
+  ],
+  "added_count": 14,
+  "deleted_count": 0,
+  "total_files": 2700,
+  "scope": "One registration/import extension and three language extensions; three standalone MVP sources. Every other baseline byte preserved, including087 collision fix,086 glass/native cursor and unrelated modules.",
+  "checks": "ActualMC26.3/realMinecraftShortcuts/full3MVPfiles isolated compile; 58APIrefs;51039purelogicassertions;9settings/wiring/JSON/spec checks.",
+  "limitations": "No full Gradle/game/Android/server/screenshot/animation parity acceptance; no proprietary fonts/music/mask packaged; legacy attribution is a disclosed heuristic.",
+  "archive_validation": "Flat root, no generated directories, CRC and every archive byte compared; preserved baseline entries rechecked after packing."
+}

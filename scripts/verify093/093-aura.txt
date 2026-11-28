@@ -1,0 +1,15 @@
+PASS: actual Minecraft26.3 / VFP5.1.1 SHA256 locks
+PASS: extracted exact changed SwordBlock gates, two HUD resolvers, CombatManager getter for real-API compilation
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.jetbrains.kotlin.org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Please consider reporting this to the maintainers of class org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt
+WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+PASS: six complete production Kotlin files compile against actual MC26.3 + real production VFP bridge; project-only hosts are explicitly listed in fixtures.py
+PASS: 368 real API member references (Minecraft=357, production VFP bridge=11) in 31 compiled port classes
+PASS: 67460 deterministic assertions on production switch/math/queue/block state machines
+Not a Minecraft session, Mixin bootstrap, network-translation test, Android test or server result.

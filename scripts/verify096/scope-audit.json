@@ -1,0 +1,27 @@
+{
+  "baseline_sha256": "bb2f76de4842d59dc9f40db7c72cd4cb848df9602a2ee7b691b0105d054aeaef",
+  "modified": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoInvManager.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/utils/inventory/InventorySafetyPolicy.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/utils/inventory/SafeInventorySession.kt"
+  ],
+  "added": [
+    "096-NEOINV-EXECUTION-FIX.md",
+    "scripts/verify096/ArmorRegression.kt",
+    "scripts/verify096/README.md",
+    "scripts/verify096/Reproduce095.kt",
+    "scripts/verify096/RuntimeRegression.kt",
+    "scripts/verify096/api-results.txt",
+    "scripts/verify096/audit.py",
+    "scripts/verify096/baseline-results.txt",
+    "scripts/verify096/compile-api.sh",
+    "scripts/verify096/reproduce095.sh",
+    "scripts/verify096/runtime-hosts.py",
+    "scripts/verify096/runtime-results.txt",
+    "scripts/verify096/runtime.sh",
+    "scripts/verify096/scope-audit.json"
+  ],
+  "deleted": [],
+  "unchanged_baseline_entries": 2826,
+  "scope": "PASS: only three Neo inventory execution/transport/planning production files changed; 095 music/lyrics/shadow, binds and unrelated baseline bytes preserved. Existing pure predict/gate/discard rules unchanged."
+}

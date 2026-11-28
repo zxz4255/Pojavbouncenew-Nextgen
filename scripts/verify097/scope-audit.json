@@ -1,0 +1,24 @@
+{
+  "baseline_sha256": "94c44fb2ab2cb598d29f854dfa951767a6c5339ca67ff2c96bd1ffc20afff3c3",
+  "modified": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/cs2mvp/ModuleCs2Mvp.kt",
+    "src/main/resources/resources/liquidbounce/lang/en_us.json",
+    "src/main/resources/resources/liquidbounce/lang/zh_cn.json"
+  ],
+  "added": [
+    "097-MVP-ENTITY-KILLS.md",
+    "scripts/verify097/AdapterRegression.kt",
+    "scripts/verify097/README.md",
+    "scripts/verify097/api-results.txt",
+    "scripts/verify097/audit.py",
+    "scripts/verify097/check-wiring.py",
+    "scripts/verify097/compile-api.sh",
+    "scripts/verify097/runtime-hosts.py",
+    "scripts/verify097/runtime-results.txt",
+    "scripts/verify097/runtime.sh",
+    "scripts/verify097/scope-audit.json"
+  ],
+  "deleted": [],
+  "unchanged_entries": 2840,
+  "scope": "PASS: MVP living-target eligibility only, plus two language description lines. Complete MVP state/renderer and all unrelated096 bytes unchanged."
+}

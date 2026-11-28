@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/Matr1ze/NeoRaven",
+  "commit": "b483ffc576e335e01f2914c920e88289ab090e66",
+  "sha256": {
+    "src/main/java/xyz/daikirai/module/player/ChestAuraModule.java": "49ad023535c9d889906397991ac3788e1911b040d558cd5b7da634b9ba168df4",
+    "src/main/java/xyz/daikirai/module/player/ChestStealerModule.java": "b5beea9a98f40ab0e4136dbd20c4c85ad6e87a7cfe5afb3d3ec6dd882b5d4581",
+    "src/main/java/xyz/daikirai/util/ItemUtils.java": "36f038067433341152347e07af3753f12263537ff0779f80819060c02fb98425",
+    "src/main/java/xyz/daikirai/util/BlockUtils.java": "2eeb0a7154684b2145c3a5fe03d71f7885ff2afe1a0622b14ff0095eaee4ee9e",
+    "src/main/java/xyz/daikirai/util/PacketUtils.java": "593f105a8fa620947f86489290f66f7456959cead7a3bd3b1cc84382d8ce100c",
+    "src/main/java/xyz/daikirai/util/RotationUtils.java": "7620bdeee9860b70b9ff57d07a4ca69e00931f4ac156f30f35b35de8fed3b117",
+    "src/main/java/xyz/daikirai/util/RotationManager.java": "f3aa6605e19fd98eb68e0f2271034d8d560e0719ae10e480cf53ab2affa9420b",
+    "src/main/java/xyz/daikirai/client/Hypixel.java": "209bb259a43aa3375e3431eba447ab98a1f775fc6a6f31ce37f74fe1919f34b0",
+    "src/main/java/xyz/daikirai/gui/onyx/hud/ChestLoot.java": "f636de53d7227c912f0b022b807af803010cd6346172b9e6ff9bc49cb664ddcb",
+    "src/main/java/xyz/daikirai/mixin/MixinNetHandlerPlayClient.java": "f262de7ac248215a8e5066bfd271e0df03b58403368763d31a0cc9c944d9cb44",
+    "src/main/java/xyz/daikirai/module/render/WatermarkModule.java": "9e041ef21215a127d7dfd86f4c84c8e9b415388e2b518e1b878415de6c662ca1",
+    "src/main/java/xyz/daikirai/util/RotationSource.java": "bc370afc822737df60d9c7e4b18c770e72885ed23330126574d1987ec43cf7be"
+  },
+  "settings_sha256": "a1fb749ad952cb0b56c500a3132f1ef5a5d6b2ea1cd09a271c60a5ddc425f4f8"
+}

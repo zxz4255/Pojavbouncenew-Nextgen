@@ -1,0 +1,33 @@
+PASS: raw short/rapid clicks, entity de-duplication, touch rising edge and hold-repeat.
+PASS: manual airborne inspect, AirInspect off/busy/block cancellation, no airborne auto-inspect, three-click attack queue.
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/tmp/verify-env/libs/joml-1.10.9.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+PASS: 2626 attack rigid-grip frames, sampled blade-body vertices outside sleeve at min/default/max thickness, >0.30 view-unit power-stroke travel.
+PASS: 78780 grip sockets, 36192 rigid-grip inspect frames, 30420 fully released blade/handle-to-both-sleeves depth clearances; 156 vanilla transform inverses, 156 exposed-handle-end checks; inward neutral arms.
+PASS: FPS knife Kotlin sources and both Java rendering mixins (dependency fixtures).
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/tmp/verify-env/libs/joml-1.10.9.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+PASS: 13 meshes, 1500 quads, 54990 finite pose snapshots, 78 palm-pivot scale/mirror checks; idle inspect gating and movement cancellation.
+PASS focused compile: layout store, ClickGUI, global settings, all changed expandable widgets and renderer logic (isolated fixtures)
+PASS in-session reopen: module/nested/toggle/list expansion, first-measure heights, scroll 1400, duplicate-name isolation, atomic save
+PASS fresh JVM/disk restore: panel XY/open/scroll, module + nested expansion, explicit choice collapse, list scroll, EN/ZH sorting
+PASS write: color, multi-choice, curve, named-list, registry-list and mutable-registry-list expansion + initial animation height
+PASS read: color, multi-choice, curve, named-list, registry-list and mutable-registry-list expansion + initial animation height
+PASS legacy v1 migration / save-before-open
+[16:06:18] [main/WARN]: Skipping invalid ClickGUI panel 'Broken'
+java.lang.NumberFormatException: For input string: "bad"
+	at java.base/jdk.internal.math.FloatingDecimal.check(FloatingDecimal.java:2324)
+	at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1928)
+	at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+	at java.base/java.lang.Float.parseFloat(Float.java:597)
+	at com.google.gson.JsonPrimitive.getAsFloat(JsonPrimitive.java:205)
+	at net.ccbluex.liquidbounce.ui.clickgui.ClickGuiLayoutStore.ensureLoaded$lambda$1$4$finite(ClickGuiLayoutStore.kt:116)
+	at net.ccbluex.liquidbounce.ui.clickgui.ClickGuiLayoutStore.ensureLoaded(ClickGuiLayoutStore.kt:118)
+	at net.ccbluex.liquidbounce.ui.clickgui.ClickGuiLayoutStore.panelFor(ClickGuiLayoutStore.kt:135)
+	at PersistenceRegressionKt.main(PersistenceRegression.kt:23)
+PASS malformed-entry isolation / finite nonnegative offsets
+PASS: compact/spaced English, acronym, alias, Chinese, no-match, clear; live EN/ZH/EN sorting; 16 viewport-height boundary checks.

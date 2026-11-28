@@ -1,0 +1,33 @@
+{
+  "repo": "SteamDatabase/GameTracking-CS2",
+  "commit": "4cb14a67c43ce55b8e077e9cd87de8fefcb1593c",
+  "source_sha256": {
+    "hudwinpanel.css": "2fae2c69bf81062ea003561f3f41eb98a089697086766a748770c47756f7d26c",
+    "hudwinpanel.xml": "46c715e810859dafd338dff9f4b2a687bfbd6e01965b5c9e6bb78e6ea365cbcb",
+    "hudwinpanel.js": "66e28cd214ad260be613b12728167368593c017474fceda8f05a33c5427232b2",
+    "csgostyles.css": "ffca3bed43f8587caeb432a1fc2493fd9a86fb79f3fc879d5aa6d17e4b5b6ae5",
+    "csgo_english.txt": "983bb48f81476d667341dbde6404f152a53b43032dd4e4aa8f4ae5d4016f6f60"
+  },
+  "measurements": {
+    "non_premier_width": 640,
+    "premier_width": 920,
+    "height": 90,
+    "avatar": 72,
+    "avatar_gap": 8,
+    "reason_height": 21,
+    "reason_font_size": 18,
+    "reason_padding_x": 6,
+    "name_width": 250,
+    "name_height": 38,
+    "name_font_size": 28,
+    "show_transition_seconds": 0.25,
+    "root_transition_seconds": 0.3,
+    "reference_root_y": 190,
+    "ct_accent": "96C8FA",
+    "t_accent": "EABE54",
+    "ct_background": "09283D",
+    "t_background": "422E08",
+    "background_alpha": 0.85
+  },
+  "award_kills_label": "MVP"
+}

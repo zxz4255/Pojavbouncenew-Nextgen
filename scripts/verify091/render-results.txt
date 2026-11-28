@@ -1,0 +1,45 @@
+Generated render hosts. Complete actual uniform enum, history holder, renderer and module compiled separately; exact pipeline/helper/pass/std140 excerpts.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.jetbrains.kotlin.org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Please consider reporting this to the maintainers of class org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt
+WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/motionblur/MotionBlurRenderer.kt:68:86: warning: unnecessary safe call on a non-null receiver of type 'RenderTarget'.
+                pass.setUniform("historyTexture", if (usable) requireNotNull(previous?.colorTextureView) else scene, sampler)
+                                                                                     ^^
+/tmp/tmp.B3pqTlkW69/Optional.kt:2:1: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+inline fun <T:Any> optional()=java.util.Optional.empty<T>()
+^^^^^^
+/tmp/tmp.B3pqTlkW69/Pass.kt:19:1: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+inline fun RenderPass.setPipeline(pipeline: RenderPipeline) {
+^^^^^^
+/tmp/tmp.B3pqTlkW69/Pipelines.kt:22:5: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+    inline fun BindGroupLayout.Builder.withSampler(name: String) =
+    ^^^^^^
+/tmp/tmp.B3pqTlkW69/Pipelines.kt:25:5: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+    inline fun BindGroupLayout.Builder.withUniformBuffer(define: ClientUniformDefine) = define.appendTo(this)
+    ^^^^^^
+/tmp/tmp.B3pqTlkW69/Pipelines.kt:27:5: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+    inline fun RenderPipeline.Builder.withUniformBuffer(define: ClientUniformDefine) =
+    ^^^^^^
+/tmp/tmp.B3pqTlkW69/Pipelines.kt:30:5: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+    inline fun RenderPipeline.Builder.screenQuadSnippet() = apply {
+    ^^^^^^
+/tmp/tmp.B3pqTlkW69/Std140.kt:43:5: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+    inline fun align(alignedSize: Int) {
+    ^^^^^^
+/tmp/tmp.B3pqTlkW69/Std140.kt:47:5: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+    inline operator fun Unit.plus(other: Unit) = Unit
+    ^^^^^^
+/tmp/tmp.B3pqTlkW69/Std140.kt:49:5: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+    inline fun get() = j.get()
+    ^^^^^^
+/tmp/tmp.B3pqTlkW69/Std140.kt:56:1: warning: expected performance impact from inlining is insignificant. Inlining works best for functions with parameters of function types.
+inline fun GpuBufferSlice.mapBuffer(read:Boolean=false,write:Boolean=false)=this.map(read,write)
+^^^^^^
+PASS: exact two new Java-to-Kotlin render hook calls compile (not the complete Mixin)
+PASS: complete MotionBlur module/renderer/history, uniform enum and target holder + exact pipeline/pass/std140 excerpts compile against actual MC26.3

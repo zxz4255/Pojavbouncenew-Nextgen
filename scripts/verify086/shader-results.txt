@@ -1,0 +1,3 @@
+PASS: old and new production GLSL compile/link on llvmpipe (LLVM 19.1.7, 256 bits)
+PASS: 653 offscreen numeric assertions (finite RGB/alpha, opacity, silhouettes, shadow, neutral tint)
+NOT a Minecraft/Android/screenshot-parity acceptance test

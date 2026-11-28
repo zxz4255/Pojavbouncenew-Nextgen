@@ -1,0 +1,31 @@
+{
+  "baseline_sha256": "3fac50d5c2e04d09e33a6bcf9ebaa79b622984586800ba6bad5f1c49a27d8b6c",
+  "modified": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/LyricPanel.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/ModuleMusic.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicScreen.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/onyx/render/UI.kt"
+  ],
+  "added": [
+    "094-MUSIC-QUIET-PANEL.md",
+    "scripts/verify094/PanelRegression.kt",
+    "scripts/verify094/README.md",
+    "scripts/verify094/audit.py",
+    "scripts/verify094/compile-glass.sh",
+    "scripts/verify094/compile-screen.sh",
+    "scripts/verify094/glass-hosts.py",
+    "scripts/verify094/glass-results.txt",
+    "scripts/verify094/music-results.txt",
+    "scripts/verify094/offscreen-quiet-gui.png",
+    "scripts/verify094/scope-audit.json",
+    "scripts/verify094/screen-hosts.py",
+    "scripts/verify094/screen-results.txt",
+    "scripts/verify094/shader-report.json",
+    "scripts/verify094/shader-results.txt",
+    "scripts/verify094/shader-test.py",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicPanelLayout.kt"
+  ],
+  "deleted": [],
+  "unchanged_entries": 2782,
+  "scope": "PASS: only main-panel screen/layout/lyric material, removal of main-panel switches, dedicated additive painter. All other baseline bytes preserved. Not full mod/game validation."
+}

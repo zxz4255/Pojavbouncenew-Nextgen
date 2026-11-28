@@ -1,0 +1,78 @@
+{
+  "baseline": "077",
+  "baseline_sha256": "9268ffa12a15957b8f61e3a5e6e46463b316bd25f5173fbe8cf2dcc2e2a9261f",
+  "baseline_files": 2508,
+  "changed": [
+    {
+      "path": "src/main/java/net/ccbluex/liquidbounce/utils/audio/parser/MusicAudioParserFactory.java",
+      "before": "1cc30bac26a2b427d1dad6dc76f31ed914c44caa872fd13a9ecd8a1aa80fba43",
+      "after": "4b5358658680525c6e92aca2c9b4c92a78b6bfebf2518e911eb1fbb28c3372e0"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouClient.kt",
+      "before": "f9351cd6d7054482b530d8de203319f51ade8dcb796ef247c0b7fa2f10983711",
+      "after": "4a45ff57ab97801f035321e55df5fa2d1c0d040e56bef5a5a17ebd5294dbef99"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/ModuleMusic.kt",
+      "before": "b1f0800ac91d06198f1322afbd97edd42115cfe166f1cb3b20f636f39002028b",
+      "after": "b34de2333653401546a192629233666e1f38857088ddc2227b713796404318b6"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicIsland.kt",
+      "before": "2587e034d8f99c4da2b39310d08d70fc35eece83f1ef81ebef7afef4ed626ac4",
+      "after": "138c8ae8981151a43f160fbf1c2e2ba6dc4f3c6f221d5e8d26fdc299e66531ac"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicManager.kt",
+      "before": "0ea17657261e358d7fae64b79edf2439c1c4f743542151bc3a5fb7826cdec00e",
+      "after": "2b6396648c06ac115826b0572fa2ef13f8ea4b1c615ee1272c182b2a11e50a73"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicScreen.kt",
+      "before": "03df9a7e453897e4656b08cb7c699980e8f630f74a902eaea1d3f4487d556fd9",
+      "after": "69f54c272f0bafc2fbb9888b981b2ade45261bdac3e0ec1741aeb966a35b6b57"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/onyx/hud/Island.kt",
+      "before": "8fe0a854b1972e5fd89e580e463aa3b8e6e0402d9d1e3d7297b9b0ce0c52f04b",
+      "after": "91f9fcfbecb2820d5ccd4928ade43cb1bafd264cb748de5c30a544ef84ee9674"
+    }
+  ],
+  "identical_count": 2501,
+  "deleted": [],
+  "added": [
+    "078-MUSIC-FIXES.md",
+    "references/music078/QueMusic-KugouApi.cpp",
+    "references/music078/QueMusic-LICENSE",
+    "references/music078/README.md",
+    "references/music078/lxserver-LICENSE",
+    "references/music078/lxserver-kglite.ts",
+    "references/music078/lxserver-kugou.ts",
+    "references/music078/lxserver-kugouLite.test.ts",
+    "scripts/verify078/IslandRegression.kt",
+    "scripts/verify078/ManagerRegression.kt",
+    "scripts/verify078/ProtocolRegression.kt",
+    "scripts/verify078/README.md",
+    "scripts/verify078/audit-package.py",
+    "scripts/verify078/check-ui-wiring.py",
+    "scripts/verify078/results.txt",
+    "scripts/verify078/run.sh",
+    "scripts/verify078/scope-audit.json",
+    "scripts/verify078/stubs/AudioEngine.kt",
+    "scripts/verify078/stubs/ChatScreen.kt",
+    "scripts/verify078/stubs/ConfigSystem.kt",
+    "scripts/verify078/stubs/GuiGraphicsExtractor.kt",
+    "scripts/verify078/stubs/Minecraft.kt",
+    "scripts/verify078/stubs/NativeAudioCodec.java",
+    "scripts/verify078/stubs/NativeAudioOutputLoader.java",
+    "scripts/verify078/stubs/NativeAudioParser.java",
+    "scripts/verify078/stubs/Theme.kt",
+    "scripts/verify078/stubs/UI.kt",
+    "scripts/verify078/stubs/UiHost.kt",
+    "scripts/verify078/stubs/UiLocalization.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouPlayback.kt"
+  ],
+  "packaged_count": 2538,
+  "protected_nonmusic_baseline": "Every baseline file outside seven explicitly listed music changes is byte-identical, including knife/inventory/chest/ClickGUI and logs."
+}

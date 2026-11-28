@@ -1,0 +1,182 @@
+[
+  {
+    "cls": "R619",
+    "name": "ChestStealer",
+    "category": "player",
+    "enabled": false,
+    "noToggle": false,
+    "hidden": false,
+    "key": 0,
+    "lite": true,
+    "failed": null,
+    "settings": [
+      {
+        "t": "desc",
+        "name": "Takes useful stacks normally; Instant takes every stack without click delays."
+      },
+      {
+        "t": "toggle",
+        "name": "Instant",
+        "value": false
+      },
+      {
+        "t": "toggle",
+        "name": "Auto close",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Ignore trash",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Chest integrity",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Pick armor",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Pick blocks",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Pick bow",
+        "value": false
+      },
+      {
+        "t": "toggle",
+        "name": "Pick food",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Pick potions",
+        "value": false
+      },
+      {
+        "t": "toggle",
+        "name": "Pick projectiles",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Pick sword",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Pick tools",
+        "value": false
+      },
+      {
+        "t": "slider",
+        "name": "Start delay",
+        "prefix": "",
+        "suffix": "ms",
+        "value": 50.0,
+        "min": 0.0,
+        "max": 1000.0,
+        "step": 10.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Min delay",
+        "prefix": "",
+        "suffix": "ms",
+        "value": 50.0,
+        "min": 0.0,
+        "max": 1000.0,
+        "step": 10.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Max delay",
+        "prefix": "",
+        "suffix": "ms",
+        "value": 50.0,
+        "min": 0.0,
+        "max": 1000.0,
+        "step": 10.0,
+        "options": null,
+        "labels": null
+      }
+    ]
+  },
+  {
+    "cls": "ChestAura",
+    "name": "ChestAura",
+    "category": "player",
+    "enabled": false,
+    "noToggle": false,
+    "hidden": false,
+    "key": 0,
+    "lite": false,
+    "failed": null,
+    "settings": [
+      {
+        "t": "desc",
+        "name": "Automatically opens nearby chests. Player check range 0 disables the nearby-player check."
+      },
+      {
+        "t": "slider",
+        "name": "Range",
+        "prefix": "",
+        "suffix": " m",
+        "value": 3,
+        "min": 0,
+        "max": 10,
+        "step": 0.1,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "toggle",
+        "name": "Through walls",
+        "value": false
+      },
+      {
+        "t": "slider",
+        "name": "Player check range",
+        "prefix": "",
+        "suffix": " m",
+        "value": 5,
+        "min": 0,
+        "max": 20,
+        "step": 0.1,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "toggle",
+        "name": "Rotation",
+        "value": true
+      },
+      {
+        "t": "slider",
+        "name": "Move-fix",
+        "prefix": "",
+        "suffix": "",
+        "value": 0,
+        "min": 0,
+        "max": 2,
+        "step": 1,
+        "options": [
+          "SILENT",
+          "STRICT",
+          "NONE"
+        ],
+        "labels": null
+      }
+    ]
+  }
+]

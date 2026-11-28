@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/Matr1ze/NeoRaven",
+  "commit": "b483ffc576e335e01f2914c920e88289ab090e66",
+  "sha256": {
+    "settings.json": "6cc9801a447f0ad99d086d024b1c0255df1553670ff94bb85f5935e2a7af3188",
+    "BlockUtils.java": "2eeb0a7154684b2145c3a5fe03d71f7885ff2afe1a0622b14ff0095eaee4ee9e",
+    "ItemUtils.java": "36f038067433341152347e07af3753f12263537ff0779f80819060c02fb98425",
+    "InvManager2Module.java": "5ab95a6de8b1fd33e2a269c110724e38ba1455cef355e8f2d2fc82033c9522ad"
+  },
+  "paths": {
+    "InvManager2Module.java": "src/main/java/xyz/daikirai/module/player/InvManager2Module.java",
+    "ItemUtils.java": "src/main/java/xyz/daikirai/util/ItemUtils.java",
+    "BlockUtils.java": "src/main/java/xyz/daikirai/util/BlockUtils.java"
+  }
+}

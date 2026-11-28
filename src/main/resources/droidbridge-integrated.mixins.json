@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "liquidbounce.DroidBridge.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "client": [
+    "MixinScreenEscape"
+  ]
+}

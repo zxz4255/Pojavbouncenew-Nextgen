@@ -1,0 +1,37 @@
+Runtime game/DSL fixtures generated. Not real game/native input/network.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.jetbrains.kotlin.org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Please consider reporting this to the maintainers of class org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt
+WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoInvManager.kt:30:12: warning: expression is unused.
+    init { NeoInvHotkeys }
+           ^^^^^^^^^^^^^
+/tmp/tmp.RVV6N61Ifb/hosts/Items.kt:15:66: warning: unchecked cast of 'Any?' to 'T? (of fun <T> get)'.
+ operator fun <T> get(k:Key<T>):T?=(custom[k]?:item.defaults[k]) as T?
+                                                                 ^^^^^
+PASS: 42783 pure production assertions; 5184 armor source/slot/scratch ? empty/full cases, exact conservation/restoration/no cursor; historical empty-tail reject reproduced.
+PASS: complete modeled tick?classification?armor plan?transport?independent native SWAP?hotbar convergence, open/closed ? armor/scratch empty/full.
+PASS: 112 full production module/transport runtime-fixture assertions. Game/DSL/native swap are explicit models, NOT actual Minecraft/Pojav/server acceptance. Fast cases accelerate only wall-clock deadlines; one real 250ms settlement run included.
+Generated original pinned InvManager2 sortClick/moveBest/matchesKind/score/isSplashPotion oracle; toy item adapters.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.jetbrains.kotlin.org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Please consider reporting this to the maintainers of class org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt
+WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+PASS: 240000 category/score comparisons against unchanged pinned upstream Java match/score bodies (modeled items).
+PASS: reproduced upstream tie churn; destination ties, duplicate destinations/types, missing categories and first-owner allocation now converge.
+PASS: 12000 randomized inventories with ties/overlapping categories/duplicate targets/pinned slots converge; 60111 swaps conserve every modeled stack.
+PASS: 1296 full-inventory armor exchanges conserve equipment, restore scratch hotbar, avoid cursor/THROW, preserve offhand; equal armor never churns.
+PASS: 2016 partial-stack merges conserve exact component IDs/cursor; all 64 discard guards, illegal slots/buttons/armor/offhand protection and explicit whole-stack THROW accounting.
+PASS: 250ms/two-distinct-tick settle floor, no same-tick burst, prediction no-op failure, late/early server rollback, repeated-state circuit breaker and explicit session reset. Settlement is NOT a server acknowledgement.
+PASS: equal shears retained; strict-better-only duplicate candidate test (actual discard still requires explicit allowlist).
+NOT proven: real MC item-component binding, applied Mixins, multiplayer/Via acceptance, live GUI or Android/Pojav. No full build/runtime claim.

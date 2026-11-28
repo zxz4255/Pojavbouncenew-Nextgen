@@ -1,0 +1,40 @@
+{
+  "baseline": "081",
+  "baseline_sha256": "4ef8b17ad9ec340ce9ca506434db7b1c70ff3a5512e972db15d2b7ff1d55fc12",
+  "baseline_files": 2595,
+  "changed": [
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/setting/ListSettingWidgets.kt",
+      "before": "3cd18c35fc1444175bae8b1a71ebc1e103b28926cc243afad21c99fb90f7055b",
+      "after": "f70847b5e1f2a1e64463bb81d82ac81f4f1a651bd456a588cc715815717821f2"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/setting/SettingRenderer.kt",
+      "before": "e742807ca79aee864553b7bf73089efd2e01851d38a73595ff4aa719a7e83cd5",
+      "after": "a419c656f9d39bdc9ac51fe2a465da19132fef7250ed0e6da961e65301d0dc7f"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/setting/SettingWidgets.kt",
+      "before": "b2e5c9ca3dc79054da7e3bc35a995e558d28aebc046d1dc55ee5a378e622a76a",
+      "after": "743eb79b65a43d1a99d164f9bd34a480d631ab3d849a3eaa63b68170b6f81bf9"
+    }
+  ],
+  "identical_count": 2592,
+  "deleted": [],
+  "added": [
+    "082-CLICKGUI-REGEX-FIX.md",
+    "scripts/verify082/README.md",
+    "scripts/verify082/TextSettingRegression.kt",
+    "scripts/verify082/audit-package.py",
+    "scripts/verify082/fixtures.py",
+    "scripts/verify082/prepare.py",
+    "scripts/verify082/results.txt",
+    "scripts/verify082/retained081-results.txt",
+    "scripts/verify082/run.sh",
+    "scripts/verify082/scope-audit.json",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/setting/TextSettingCodec.kt"
+  ],
+  "packaged_count": 2606,
+  "excluded_generated": [],
+  "protected": "Every081 file other than three named ClickGUI widgets is byte-identical; online keys/music, Neo compile fixes, knife, inventory, chest, config factories/adapters and all historical tests/docs retained."
+}

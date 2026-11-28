@@ -1,0 +1,99 @@
+{
+  "status": "PASS",
+  "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+  "assertions": 2625,
+  "geometry": [
+    {
+      "profile": 1,
+      "source_y_fraction": 0.45,
+      "source_x_fraction": 0.75,
+      "rendered_x_fraction": 0.7472826086956522,
+      "error_source_pixels": 1.0
+    },
+    {
+      "profile": 1,
+      "source_y_fraction": 0.5,
+      "source_x_fraction": 0.7635869565217391,
+      "rendered_x_fraction": 0.7663043478260869,
+      "error_source_pixels": 1.0
+    },
+    {
+      "profile": 1,
+      "source_y_fraction": 0.6,
+      "source_x_fraction": 0.779891304347826,
+      "rendered_x_fraction": 0.7853260869565217,
+      "error_source_pixels": 2.0
+    },
+    {
+      "profile": 1,
+      "source_y_fraction": 0.7,
+      "source_x_fraction": 0.7907608695652174,
+      "rendered_x_fraction": 0.7907608695652174,
+      "error_source_pixels": 0.0
+    },
+    {
+      "profile": 1,
+      "source_y_fraction": 0.8,
+      "source_x_fraction": 0.779891304347826,
+      "rendered_x_fraction": 0.7771739130434783,
+      "error_source_pixels": 1.0
+    },
+    {
+      "profile": 1,
+      "source_y_fraction": 0.9,
+      "source_x_fraction": 0.75,
+      "rendered_x_fraction": 0.75,
+      "error_source_pixels": 0.0
+    },
+    {
+      "profile": 1,
+      "source_y_fraction": 0.96,
+      "source_x_fraction": 0.7228260869565217,
+      "rendered_x_fraction": 0.7255434782608695,
+      "error_source_pixels": 1.0
+    },
+    {
+      "profile": 2,
+      "source_y_fraction": 0.03,
+      "source_x_fraction": 0.45317220543806647,
+      "rendered_x_fraction": 0.4486404833836858,
+      "error_source_pixels": 1.5
+    },
+    {
+      "profile": 2,
+      "source_y_fraction": 0.1,
+      "source_x_fraction": 0.4471299093655589,
+      "rendered_x_fraction": 0.44561933534743203,
+      "error_source_pixels": 0.5
+    },
+    {
+      "profile": 2,
+      "source_y_fraction": 0.18,
+      "source_x_fraction": 0.44410876132930516,
+      "rendered_x_fraction": 0.44561933534743203,
+      "error_source_pixels": 0.5
+    },
+    {
+      "profile": 2,
+      "source_y_fraction": 0.25,
+      "source_x_fraction": 0.4501510574018127,
+      "rendered_x_fraction": 0.4486404833836858,
+      "error_source_pixels": 0.5
+    },
+    {
+      "profile": 2,
+      "source_y_fraction": 0.9,
+      "source_x_fraction": 0.4652567975830816,
+      "rendered_x_fraction": 0.4637462235649547,
+      "error_source_pixels": 0.5
+    },
+    {
+      "profile": 2,
+      "source_y_fraction": 0.96,
+      "source_x_fraction": 0.4622356495468278,
+      "rendered_x_fraction": 0.4607250755287009,
+      "error_source_pixels": 0.5
+    }
+  ],
+  "limitations": "Offscreen production shader on synthetic/constant background. Feature-position fits only. NOT whole-image RGB pixel parity, Minecraft/Android captures, live framebuffer scheduling or full build validation."
+}

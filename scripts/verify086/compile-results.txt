@@ -1,0 +1,15 @@
+Explicit project-only hosts generated; actual Minecraft/RenderPearl/JOML are not mocked
+Applied the three existing project GUI access-widener declarations to real MC classes in a temporary compile overlay
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.jetbrains.kotlin.org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Please consider reporting this to the maintainers of class org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt
+WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+PASS: complete production glass Java records + three complete Kotlin surface emitters compile against actual MC26.3
+PASS: exact Onyx card hook and Style enum bodies compile; project-only hosts listed in hosts.py
+PASS: 14008 production record assertions; per-element style leaves old vertex mode packing unchanged
+NOT a complete Gradle build, Mixin/game/Android validation

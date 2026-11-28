@@ -1,0 +1,87 @@
+PASS: pinned upstream InvManager2/ItemUtils/BlockUtils/settings hashes, attribution and protected 075 chest/knife/effect/layout/inventory-infrastructure source hashes.
+PASS: all 28 upstream settings/defaults + new empty discard lists; TS/Neo independent registration/interlock; single native click site, exact component IDs, capacity preflight, 250ms/tick gate and unsafe TS paths removed (static audit).
+PASS: Neumorphism renderer/settings/UI branches/labels removed; Modern/Glass remain, old style alias maps to Modern; EN/ZH JSON contains descriptions without duplicate keys.
+PASS: actual repaired TS module, new Neo module, shared safety policy/transport and modern adapters compile against MC26.3 APIs (host config/events/old scoring/slot helpers are fixtures).
+Generated original pinned InvManager2 sortClick/moveBest/matchesKind/score/isSplashPotion oracle; toy item adapters.
+PASS: 240000 category/score comparisons against unchanged pinned upstream Java match/score bodies (modeled items).
+PASS: reproduced upstream tie churn; destination ties, duplicate destinations/types, missing categories and first-owner allocation now converge.
+PASS: 12000 randomized inventories with ties/overlapping categories/duplicate targets/pinned slots converge; 60111 swaps conserve every modeled stack.
+PASS: 1296 full-inventory armor exchanges conserve equipment, restore scratch hotbar, avoid cursor/THROW, preserve offhand; equal armor never churns.
+PASS: 2016 partial-stack merges conserve exact component IDs/cursor; all 64 discard guards, illegal slots/buttons/armor/offhand protection and explicit whole-stack THROW accounting.
+PASS: 250ms/two-distinct-tick settle floor, no same-tick burst, prediction no-op failure, late/early server rollback, repeated-state circuit breaker and explicit session reset. Settlement is NOT a server acknowledgement.
+PASS: equal shears retained; strict-better-only duplicate candidate test (actual discard still requires explicit allowlist).
+NOT proven: real MC item-component binding, applied Mixins, multiplayer/Via acceptance, live GUI or Android/Pojav. No full build/runtime claim.
+PASS: actual ClickGUI enum has Modern/Glass only; legacy Neumorphism aliases migrate to Modern; actual palette retains Modern and Glass colors (host/UI fixtures).
+PASS: 12 pinned upstream source hashes/settings; 20 old ChestAura/Stealer, FPSKnife and 074 effect files byte-identical to delivered074.
+PASS: original 5 Aura / 15 Stealer settings, defaults, steps, separate queues/config names, low-priority rotations and one-sided old-module conflict guards.
+PASS: both old and new modules registered exactly once; additive HUD bridge; native packet target API/order audit. No Mixin application or cancellation-order runtime claim.
+PASS: EN/ZH descriptions and independent native Chinese UI labels; no duplicate JSON keys.
+PASS: actual 075 Kotlin modules/policy/item/protocol adapters + shared HUD observer and both Java packet mixins compile against real MC26.3 APIs (LB/HUD dependency fixtures).
+Generated upstream oracle: original slotsToSteal + wantedCategory + isTrash + best-* bodies; toy item/score adapters.
+PASS: 16384 randomized 27/54-slot chests over all 1024 toggle combinations match actual pinned upstream Java filtering methods (toy scored items).
+PASS: ties/inventory equality, Instant and IgnoreTrash overrides, golden-apple/rod rules and legacy scores.
+PASS: min/max delay normalization, bounded jitter, original multilingual blocked names and Hypixel lobby/queue projections.
+PASS: Aura 80/100/1200ms boundaries, stable/changed target timing, confirmation-only marking, close cooldown, enable history, respawn/world isolation.
+PASS: normal deadlines/order/completion, Instant same-call 54-click bound, empty-shell guard, repeat-snapshot idempotence, integrity/AutoClose, replacement close, identity-switch and mid-batch closure.
+NOT tested here: full Gradle/game/Mixin application, actual server acknowledgements, mobile UI/rendering, live rotations or packet-cancellation ordering.
+PASS: seven untouched pinned upstream source hashes and GPL attribution.
+PASS: 16 original shader kernel functions (including all four effect main functions), constants and animation equations retained after enumerated API substitutions.
+PASS: settings/defaults/0.05 quantization, native registry, explicit world-only Rain -> overlay flush -> Cinematic ordering; target method descriptor audit (not a Mixin runtime test).
+PASS: EN/ZH descriptions and native Chinese UI labels; JSON duplicate-key audit.
+PASS: compile overlay applies existing pipeline access-widener declarations (3 classes).
+PASS: actual new modules/renderers, entire actual shader/pipeline/UBO/vertex-format registries and target holder compile against official MC26.3 APIs (app/event/config dependency fixtures).
+PASS: eye adaptation defaults, asymmetric exponential speeds, world reset, stall cap and 15?240 FPS.
+PASS: 4099 chunk/noise origins, refresh/movement/time rollback/world invalidation; 16384 modern heights round-trip.
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/tmp/verify-env/libs/joml-1.10.9.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+PASS: 108 conventional/reversed-depth reconstructions at 3 FOVs; actual std140 UBO sizes 128/256 bytes.
+PASS: five GLSL330 shader syntax checks.
+GPU fixture: llvmpipe (LLVM 19.1.7, 256 bits) | 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1
+PASS: five port shaders and four pinned upstream shader fixtures compiled and linked on OpenGL.
+PASS: cinematic_light.fsh 128x96 upstream max error (bloom off/on) [6.616115570068359e-06, 6.318092346191406e-06]
+PASS: cinematic_high.fsh 128x96 upstream max error (bloom off/on) [2.866983413696289e-05, 0.0012389421463012695]
+PASS: Rain 128x96: upstream error=0.000010, reversed-depth=0.000010, composite=0.000002; dry/rain/negative-Y/alpha gates. Time delta=0.000000
+PASS: cinematic_light.fsh 129x97 upstream max error (bloom off/on) [2.1338462829589844e-05, 2.0325183868408203e-05]
+PASS: cinematic_high.fsh 129x97 upstream max error (bloom off/on) [1.1861324310302734e-05, 0.0012328624725341797]
+PASS: Rain 129x97: upstream error=0.000005, reversed-depth=0.000005, composite=0.000001; dry/rain/negative-Y/alpha gates. Time delta=0.000000
+PASS: EGL synthetic-scene smoke/parity checks; NOT target-game or device visual parity.
+PASS: animated ripple normals at three times are bit-identical to upstream and change with time (isolated kernel, not an in-game SSR-animation test).
+PASS: 6565 inspect policy frames (only Toss releases); 24804 palm-front spin clearance poses; 1980 safe-handle grips embedded in hand; 467280 blade/moving-handle triangle-vs-sleeve tests, 0 intersections.
+PASS: raw short/rapid clicks, entity de-duplication, touch rising edge and hold-repeat.
+PASS: manual airborne inspect, AirInspect off/busy/block cancellation, no airborne auto-inspect, three-click attack queue.
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/tmp/verify-env/libs/joml-1.10.9.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+PASS: 2626 attack rigid-grip frames, sampled blade-body vertices outside sleeve at min/default/max thickness, >0.30 view-unit power-stroke travel.
+PASS: 50988 grip sockets, 36792 rigid-grip inspect frames, 10140 fully released blade/handle-to-both-sleeves depth clearances; 156 vanilla transform inverses, 156 exposed-handle-end checks; inward neutral arms.
+PASS: FPS knife Kotlin sources and both Java rendering mixins (dependency fixtures).
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/tmp/verify-env/libs/joml-1.10.9.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+PASS: 13 meshes, 1500 quads, 54990 finite pose snapshots, 78 palm-pivot scale/mirror checks; idle inspect gating and movement cancellation.
+PASS focused compile: layout store, ClickGUI, global settings, all changed expandable widgets and renderer logic (isolated fixtures)
+PASS in-session reopen: module/nested/toggle/list expansion, first-measure heights, scroll 1400, duplicate-name isolation, atomic save
+PASS fresh JVM/disk restore: panel XY/open/scroll, module + nested expansion, explicit choice collapse, list scroll, EN/ZH sorting
+PASS write: color, multi-choice, curve, named-list, registry-list and mutable-registry-list expansion + initial animation height
+PASS read: color, multi-choice, curve, named-list, registry-list and mutable-registry-list expansion + initial animation height
+PASS legacy v1 migration / save-before-open
+[15:55:15] [main/WARN]: Skipping invalid ClickGUI panel 'Broken'
+java.lang.NumberFormatException: For input string: "bad"
+	at java.base/jdk.internal.math.FloatingDecimal.check(FloatingDecimal.java:2324)
+	at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1928)
+	at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+	at java.base/java.lang.Float.parseFloat(Float.java:597)
+	at com.google.gson.JsonPrimitive.getAsFloat(JsonPrimitive.java:205)
+	at net.ccbluex.liquidbounce.ui.clickgui.ClickGuiLayoutStore.ensureLoaded$lambda$1$4$finite(ClickGuiLayoutStore.kt:116)
+	at net.ccbluex.liquidbounce.ui.clickgui.ClickGuiLayoutStore.ensureLoaded(ClickGuiLayoutStore.kt:118)
+	at net.ccbluex.liquidbounce.ui.clickgui.ClickGuiLayoutStore.panelFor(ClickGuiLayoutStore.kt:135)
+	at PersistenceRegressionKt.main(PersistenceRegression.kt:23)
+PASS malformed-entry isolation / finite nonnegative offsets
+PASS: compact/spaced English, acronym, alias, Chinese, no-match, clear; live EN/ZH/EN sorting; 16 viewport-height boundary checks.
+PASS: 074 verification completed. Full Gradle/game/Mixin/Pojav verification remains outstanding.
+PASS: 075 verification complete. Full build, applied Mixins, server transactions/rotations, native item-component runtime and Android/Pojav acceptance remain outstanding.
+PASS: 076 focused verification completed. Full Gradle/game/component runtime/server/Via/Mixin/Pojav acceptance remains outstanding.

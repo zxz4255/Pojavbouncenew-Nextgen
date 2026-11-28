@@ -1,0 +1,7 @@
+{
+  "assertions": 95,
+  "hud_max_rgba_difference_vs089": 0,
+  "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+  "gaussian_checker_std_ratio": 0.0004754425317514688,
+  "scope": "Production GLSL/EGL numeric tests + actual4 blur fragment passes with fullscreen harness. No Minecraft/Android/full-build verification."
+}

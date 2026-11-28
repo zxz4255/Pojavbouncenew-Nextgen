@@ -1,0 +1,4 @@
+Prepared exact immutable081 negative-control and patched node/renderer/list bodies; actual Value, UiTextEditState and list values; host fixtures explicitly separated
+PASS: immutable081 reproduced Regex -> String ClassCastException via SettingRenderer.stepGroupAnimations -> TextSettingNode constructor
+PASS: immutable081 negative control also reproduced String insertion into a declared Regex list
+PASS: 082 10044 assertions: actual Value/listener, dispatcher/cache/animation/render, actual text editor input, Regex/String type preservation, invalid draft/commit/blur/Escape, Regex options, restore/external updates, unsupported TEXT fallback, empty regex-list safe addition and 2000 reopen/edit cycles; game/drawing hosts are fixtures

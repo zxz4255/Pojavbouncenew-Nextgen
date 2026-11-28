@@ -1,0 +1,18 @@
+PASS: 2498 baseline files checked; 4 planned knife modifications; 2494 existing files byte-identical.
+PASS: 10 explicitly allowed additions; no baseline deletions.
+Modified:
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeAnimator.kt
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeMeshes.kt
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeRig.kt
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/ModuleFpsKnife.kt
+Added:
+077-FPS-KNIFE-REWORK.md
+references/cs2-077/REFERENCES.md
+scripts/verify077/ChoreographyRegression.kt
+scripts/verify077/README.md
+scripts/verify077/baseline076.sha256.json
+scripts/verify077/results.txt
+scripts/verify077/run.sh
+scripts/verify077/source-audit-results.txt
+scripts/verify077/source-audit.py
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeChoreography.kt

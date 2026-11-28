@@ -1,0 +1,4 @@
+PASS: old/new production GLSL compile/link on llvmpipe (LLVM 19.1.7, 256 bits)
+PASS: 2625 offscreen assertions; all 4 material lanes, alpha/finite bounds, silhouettes, independent arcs, zero-lens reflections
+Source-trace maximum ridge/seam-position error (not image parity): 2.0 original screenshot pixels
+Offscreen production shader on synthetic/constant background. Feature-position fits only. NOT whole-image RGB pixel parity, Minecraft/Android captures, live framebuffer scheduling or full build validation.

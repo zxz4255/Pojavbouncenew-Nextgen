@@ -1,0 +1,44 @@
+{
+  "baseline_sha256": "7944467014ce6c1086e42c62f48047032e7adde86a9fa36d485276668ea85686",
+  "baseline_files": 2726,
+  "modified_count": 6,
+  "modified_files": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/onyx/render/UI.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/ClickGuiTabView.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/GlobalSettingsTabView.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/glass/ClickGuiGlassSurface.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/glass/LightPollutionGlassSurface.kt",
+    "src/main/resources/resources/liquidbounce/shaders/clickgui/light_pollution_glass.fsh"
+  ],
+  "identical_baseline_files": 2720,
+  "deleted_count": 0,
+  "added_count": 12,
+  "added_files": [
+    "090-QUIET-GUI-GLASS.md",
+    "090-QUIET-GUI-REVIEW.html",
+    "scripts/verify090/README.md",
+    "scripts/verify090/audit-package.py",
+    "scripts/verify090/compile-results.txt",
+    "scripts/verify090/compile.sh",
+    "scripts/verify090/glaze-hosts.py",
+    "scripts/verify090/offscreen-quiet-gui.png",
+    "scripts/verify090/scope-audit.json",
+    "scripts/verify090/shader-report.json",
+    "scripts/verify090/shader-results.txt",
+    "scripts/verify090/shader-test.py"
+  ],
+  "total_files": 2738,
+  "scope": "Quiet GUI/PANEL material only: no highlights/lens/rim/arc/glaze, radius<=3GUI units, one capped black shadow, existing Gaussian framebuffer sampling inside silhouette. Music GUI hudCard=false routes PANEL; true HUD profiles retained.",
+  "checks": {
+    "compile": "2entireJavaRecords+3entireKotlinSurfaceEmitters against actual MC26.3; exact Onyx/scope/upgrade/glaze excerpts with explicit project hosts, not full GUI files",
+    "vertex_assertions": 177024,
+    "scope_assertions": 27006,
+    "shader_assertions": 95,
+    "hud_samples_vs089": 84,
+    "hud_max_rgba_difference": 0,
+    "blur": "Existing actualH/V Gaussian fragments executed4passes at half resolution using fullscreen harness; shared production blur files byte-identical"
+  },
+  "preservation": "All other baseline bytes preserved, including inventory/Neo module, MVP,087 fixes, native cursor/Mixins, knives, HUD components and historical evidence. NeoInvManager revert NOT fixed; awaiting device log.",
+  "limitations": "No full Gradle/Mixin/Minecraft/Android/game-framebuffer/screenshot acceptance. No-FBO fallback remains non-optical.",
+  "archive_validation": "Flat root, excluded build/cache/dependency dirs, allCRC/allbytes verified, unmodified baseline entries rechecked after packing"
+}

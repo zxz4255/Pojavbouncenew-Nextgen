@@ -1,0 +1,4 @@
+PASS: 95 quiet-panel/blur/HUD-preservation shader assertions on llvmpipe (LLVM 19.1.7, 256 bits)
+HUD max RGBA difference vs immutable093: 0
+GUI: no highlight/rim/arc/lens, constant interior flat-scene response; single black shadow; actual H/V Gaussian4-pass lowpass and clipped card coverage
+NOT a Minecraft/Android screenshot, full Gradle build or game framebuffer-scheduling acceptance

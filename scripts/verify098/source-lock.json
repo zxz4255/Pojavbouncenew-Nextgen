@@ -1,0 +1,15 @@
+{
+  "repo": "https://github.com/CCBlueX/LiquidBounce",
+  "commit": "7a729e78aab726a0bc2c2721ef29c5718053dc80",
+  "reason": "Last scheduler-based upstream before inventory-plan refactor; matches this branch scheduling API. Not customized TS ChestAura/Stealer.",
+  "files": {
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/cheststealer/ModuleChestStealer.kt": "d435e8c3e0d565c2a39528c581755648a60a6a164eee127526771f11971b90f1",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/cheststealer/features/FeatureChestAura.kt": "832d19bd73c8fd65dbdc79fcf7ba88c207a2ef2e1995ae6fa2142a13fb9e6c82",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/cheststealer/features/FeatureSilentScreen.kt": "0635f94953dbb742a8739b87367c0ce1dd19c0991c3520a37b825bdde77b4be3",
+    "src/main/kotlin/net/ccbluex/liquidbounce/utils/inventory/InventoryValueGroups.kt": "488b4a26772fa3b5ea4a6e210cdcebdbccd8fcae41c0d3feab097ad678216a53",
+    "src/main/kotlin/net/ccbluex/liquidbounce/utils/inventory/InventoryAction.kt": "4a3e756183085b643d5d51d89378ca8e06926fbe0f58edc6a27deaca9705c9c1",
+    "src/main/kotlin/net/ccbluex/liquidbounce/utils/inventory/InventoryManager.kt": "972547a28d6a39b6236f0d9dae99be4ac8de9060b2e66976cade7f32c0f7f1a7"
+  },
+  "minecraftSha256": "4508d006323f24fa02876310c192d739af56516eb259000ac50f0909a68c9a2d",
+  "toolchain": "Kotlin 2.4.20 with project companion-blocks flag, JDK25, official Minecraft26.3 client jar"
+}

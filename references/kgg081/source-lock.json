@@ -1,0 +1,43 @@
+{
+  "repository": "MakcRe/KuGouMusicApi",
+  "commit": "786fe07514b99158d19b24f7f5cea11977a1db67",
+  "license": "MIT",
+  "files": [
+    {
+      "local": "upstream-song_url_new.js",
+      "upstream": "module/song_url_new.js",
+      "url": "https://raw.githubusercontent.com/MakcRe/KuGouMusicApi/786fe07514b99158d19b24f7f5cea11977a1db67/module/song_url_new.js",
+      "sha256": "308d7ce7eb693618e4040d0ee66891f805216af1c3875d1da920859372b70bd7"
+    },
+    {
+      "local": "request.js",
+      "upstream": "util/request.js",
+      "url": "https://raw.githubusercontent.com/MakcRe/KuGouMusicApi/786fe07514b99158d19b24f7f5cea11977a1db67/util/request.js",
+      "sha256": "a7ee5823aa8b8062574e579d5fb33baccda82d92975d305ce9061798e9a7dfd9"
+    },
+    {
+      "local": "helper.js",
+      "upstream": "util/helper.js",
+      "url": "https://raw.githubusercontent.com/MakcRe/KuGouMusicApi/786fe07514b99158d19b24f7f5cea11977a1db67/util/helper.js",
+      "sha256": "3aafbde4ebc760e48911cb0bb3d9982882628207fd18b9411a8234d2b87e2445"
+    },
+    {
+      "local": "index.js",
+      "upstream": "util/index.js",
+      "url": "https://raw.githubusercontent.com/MakcRe/KuGouMusicApi/786fe07514b99158d19b24f7f5cea11977a1db67/util/index.js",
+      "sha256": "fb984ed9a8a647ff90d67b64f9ca5deee26618dcb3042e54406cefeb7a00840b"
+    },
+    {
+      "local": "config.json",
+      "upstream": "util/config.json",
+      "url": "https://raw.githubusercontent.com/MakcRe/KuGouMusicApi/786fe07514b99158d19b24f7f5cea11977a1db67/util/config.json",
+      "sha256": "d6d87820cb07b535462a4fa14f1c56aec76a2578b08c773f29c692d14f77c072"
+    },
+    {
+      "local": "LICENSE-MakcRe.txt",
+      "upstream": "LICENSE",
+      "url": "https://raw.githubusercontent.com/MakcRe/KuGouMusicApi/786fe07514b99158d19b24f7f5cea11977a1db67/LICENSE",
+      "sha256": "1002dfdd55aac5e31b39e840c6db2f9f7c25924d1e61a11bbb33343d5d6d324f"
+    }
+  ]
+}

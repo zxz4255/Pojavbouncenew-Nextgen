@@ -1,0 +1,33 @@
+{
+  "baseline": "083",
+  "baseline_sha256": "9b863ad05f2f66735bdfa03dbb9363322518dbdc68592493811fe4ac3ba7a8a1",
+  "baseline_files": 2622,
+  "changed": [
+    {
+      "path": "src/main/java/net/ccbluex/liquidbounce/injection/mixins/minecraft/client/MixinGui.java",
+      "before": "cd0fa706f55ee6a699be2f59600a8516e0711045dfd76fa80ccd3f2291d8e418",
+      "after": "6265417cae383ff340830bfb7d5a3fafba3bc0b73ac21194d0b4208bf7a7e795"
+    },
+    {
+      "path": "src/main/java/net/ccbluex/liquidbounce/utils/input/AndroidGuiCursor.java",
+      "before": "3b18f4bf4b00371a1c4d5d9f1e69da4b257cafb3d1032fd368d4ef68bb6b5089",
+      "after": "887d3ab442f61a9528522489423e65079101003334ff17bbd4701b3ce70df858"
+    }
+  ],
+  "identical_count": 2620,
+  "deleted": [],
+  "added": [
+    "084-ANDROID-NATIVE-CURSOR-ONLY.md",
+    "scripts/verify084/ApiAudit.java",
+    "scripts/verify084/CursorRegression.java",
+    "scripts/verify084/README.md",
+    "scripts/verify084/audit-package.py",
+    "scripts/verify084/prepare.py",
+    "scripts/verify084/results.txt",
+    "scripts/verify084/run.sh",
+    "scripts/verify084/scope-audit.json"
+  ],
+  "packaged_count": 2631,
+  "excluded_generated": [],
+  "protected": "Every083 byte except two named native cursor/GUI files is unchanged. Software cursor implementation and rendering hook removed; sword1.8, all mouse event dispatch,082 Regex,081 music/online keys and all other features/config retained."
+}

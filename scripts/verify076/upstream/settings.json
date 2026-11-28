@@ -1,0 +1,285 @@
+[
+  {
+    "cls": "R620",
+    "name": "InvManager2",
+    "category": "player",
+    "enabled": false,
+    "noToggle": false,
+    "hidden": false,
+    "key": 0,
+    "lite": true,
+    "failed": null,
+    "settings": [
+      {
+        "t": "desc",
+        "name": "Expo InvManager: better armor on, trash out, best items into their hotbar slots."
+      },
+      {
+        "t": "toggle",
+        "name": "Auto armor",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Throw trash",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Auto close",
+        "value": false
+      },
+      {
+        "t": "toggle",
+        "name": "Only sort once",
+        "value": false
+      },
+      {
+        "t": "toggle",
+        "name": "Only items configured are trash",
+        "value": false
+      },
+      {
+        "t": "toggle",
+        "name": "Projectiles is trash",
+        "value": false
+      },
+      {
+        "t": "toggle",
+        "name": "Normal food is trash",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Bow is trash",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Potion is trash",
+        "value": true
+      },
+      {
+        "t": "toggle",
+        "name": "Tools are trash",
+        "value": true
+      },
+      {
+        "t": "slider",
+        "name": "Sword slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 1.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Projectiles slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 3.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Block slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 2.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Food slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 9.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Bow slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 4.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Pickaxe slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 5.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Axe slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 6.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Shovel slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 7.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Potion slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 8.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Fireball slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 0.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Ender pearl slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 0.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Shears slot",
+        "prefix": "",
+        "suffix": "",
+        "value": 0.0,
+        "min": 0.0,
+        "max": 9.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Max block slots",
+        "prefix": "",
+        "suffix": "",
+        "value": 10.0,
+        "min": 1.0,
+        "max": 36.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Max arrow slots",
+        "prefix": "",
+        "suffix": "",
+        "value": 10.0,
+        "min": 1.0,
+        "max": 36.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Max trash throws",
+        "prefix": "",
+        "suffix": "",
+        "value": 36.0,
+        "min": 1.0,
+        "max": 36.0,
+        "step": 1.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Start delay",
+        "prefix": "",
+        "suffix": "ms",
+        "value": 50.0,
+        "min": 0.0,
+        "max": 1000.0,
+        "step": 10.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Min delay",
+        "prefix": "",
+        "suffix": "ms",
+        "value": 50.0,
+        "min": 0.0,
+        "max": 1000.0,
+        "step": 10.0,
+        "options": null,
+        "labels": null
+      },
+      {
+        "t": "slider",
+        "name": "Max delay",
+        "prefix": "",
+        "suffix": "ms",
+        "value": 50.0,
+        "min": 0.0,
+        "max": 1000.0,
+        "step": 10.0,
+        "options": null,
+        "labels": null
+      }
+    ]
+  }
+]

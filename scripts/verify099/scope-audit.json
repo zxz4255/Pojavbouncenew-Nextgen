@@ -1,0 +1,32 @@
+{
+  "baseline_archive": "Pojavbouncenew-Nextgen-098-ORIGINAL-AURA-CHESTS.zip",
+  "baseline_sha256": "a6bfa8c1a55772e1230dddd03327eb5f1a4c078cd95b4c329763faabfe35e778",
+  "modified": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/onyx/render/UI.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/moderngui/ModernGuiSurface.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/ClickGuiTabView.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/HudEditorTabView.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/glass/ClickGuiGlassSurface.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/glass/LightPollutionGlassSurface.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/clickgui/setting/SettingWidgets.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/ui/common/UiPalette.kt",
+    "src/main/resources/resources/liquidbounce/shaders/clickgui/light_pollution_glass.fsh"
+  ],
+  "added": [
+    "099-LIGHT-POLLUTION-WHITE-BLOOM-GUI.md",
+    "scripts/verify099/README.md",
+    "scripts/verify099/WhiteBloomRegression.kt",
+    "scripts/verify099/audit.py",
+    "scripts/verify099/compile-glass.sh",
+    "scripts/verify099/glass-hosts.py",
+    "scripts/verify099/glass-results.txt",
+    "scripts/verify099/offscreen-white-bloom-gui.png",
+    "scripts/verify099/scope-audit.json",
+    "scripts/verify099/shader-report.json",
+    "scripts/verify099/shader-results.txt",
+    "scripts/verify099/shader-test.py"
+  ],
+  "deleted": [],
+  "unchanged_entries": 2856,
+  "scope": "PASS: strict 098 -> 099 volumetric white-bloom LightPollutionGlass upgrade across ClickGUI & ModernGUI; 089 HUD profiles & 094 Music quiet panel preserved verbatim."
+}

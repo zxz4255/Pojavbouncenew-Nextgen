@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "deliverable": "DIAGNOSTIC SOURCE, NOT CONFIRMED FIX OR MOD JAR",
+  "baselineSHA256": "280aa8b93086d35c531a9303849153d04706b231cd531f76e4ca07ba9e403245",
+  "modified": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/config/types/Value.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoInvManager.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/NeoInvHotkeys.kt"
+  ],
+  "newProduction": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/config/types/ValueWriteTrace.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/NeoInvDiagnostics.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/NeoInvTraceWriter.kt"
+  ],
+  "baselineIdentical": 2760,
+  "deleted": [],
+  "proof": "complete Value/ToggleableValueGroup/ClientModule/Neo setter-chain bounded test + diagnostics output tests; no game/root-cause claim"
+}

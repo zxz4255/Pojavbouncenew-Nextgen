@@ -1,0 +1,191 @@
+{
+  "status": "Reference-traced material candidate, not full pixel-level acceptance",
+  "source_images": [
+    {
+      "file": "Screenshot_20261127_232004.jpg",
+      "sha256": "5df8d8b63b9dd82afb7d39745e4a382b17b5e7f62aaa8a83c2d5ace5d4dbd5f2",
+      "size": [
+        1080,
+        2400
+      ]
+    },
+    {
+      "file": "Screenshot_20261127_232005.jpg",
+      "sha256": "e880f55cec1b0db85832cf50cb826658dac9da44b155afd53508e6ccb9524541",
+      "size": [
+        1080,
+        2400
+      ]
+    },
+    {
+      "file": "Screenshot_20261127_232008.jpg",
+      "sha256": "e92cf5724fd45ef4a41c2fb519390f948f61908abc0dc28aebfdd62bfc79b2b2",
+      "size": [
+        1080,
+        2400
+      ]
+    },
+    {
+      "file": "Screenshot_20261127_232010.jpg",
+      "sha256": "6de04b107eb6e7219850ffa92fb0a8221c512e98e5d3df41bd4f5bf27676b6eb",
+      "size": [
+        1080,
+        2400
+      ]
+    },
+    {
+      "file": "Screenshot_20261127_232021.jpg",
+      "sha256": "4d45425442c3694778e58e2b5987de39341e185e6c6718a06011a8536244175e",
+      "size": [
+        1080,
+        2400
+      ]
+    },
+    {
+      "file": "Screenshot_20261127_232027.jpg",
+      "sha256": "3b43ed2a97c3c4743af6b7d08ca6d9b70c9902ebd8b7f6cb8adf1c091482344f",
+      "size": [
+        1080,
+        2400
+      ]
+    }
+  ],
+  "coordinate_space": "Original supplied JPEG pixels; EXIF screenshot/viewer UI and game content not part of the material. x/y fractions refer to the cropped card body. Crop bounds are exploratory manual anchors, not original-source layout metadata.",
+  "regions": {
+    "target": {
+      "file": "Screenshot_20261127_232021.jpg",
+      "box": [
+        430,
+        881,
+        798,
+        987
+      ],
+      "profile": 1
+    },
+    "counter": {
+      "file": "Screenshot_20261127_232021.jpg",
+      "box": [
+        173,
+        1393,
+        504,
+        1489
+      ],
+      "profile": 2
+    },
+    "clickgui": {
+      "file": "Screenshot_20261127_232027.jpg",
+      "box": [
+        94,
+        279,
+        344,
+        945
+      ],
+      "profile": 0
+    },
+    "music": {
+      "file": "Screenshot_20261127_232008.jpg",
+      "box": [
+        141,
+        454,
+        707,
+        668
+      ],
+      "profile": 3
+    }
+  },
+  "target_fold_trace": [
+    [
+      0.45,
+      0.75
+    ],
+    [
+      0.5,
+      0.7635869565217391
+    ],
+    [
+      0.6,
+      0.779891304347826
+    ],
+    [
+      0.7,
+      0.7907608695652174
+    ],
+    [
+      0.8,
+      0.779891304347826
+    ],
+    [
+      0.9,
+      0.75
+    ],
+    [
+      0.96,
+      0.7228260869565217
+    ]
+  ],
+  "target_fold_fit": {
+    "equation": "x = (0.4182908 + .004 radiance-peak compensation) + 1.0968153*y - 0.8101146*y*y",
+    "fit_method": "Least-squares quadratic fitted to lower unobscured light-ridge samples in target JPEG crop; upper section extrapolated, not a measured exact path; +.004 horizontal compensation aligns the final summed-radiance peak, not just the curve center",
+    "image_measurement": "Mean RGB scanlines, gaussian_filter1d sigma1.8px; max in x range .62..84; avoid text rows .30/.40 and outer right specular",
+    "not_proven": "The source has scenery/tonemapping/compression; no claimed extraction of original shader or whole-image RGB match"
+  },
+  "counter_seam_trace": [
+    [
+      0.03,
+      0.45317220543806647
+    ],
+    [
+      0.1,
+      0.4471299093655589
+    ],
+    [
+      0.18,
+      0.44410876132930516
+    ],
+    [
+      0.25,
+      0.4501510574018127
+    ],
+    [
+      0.9,
+      0.4652567975830816
+    ],
+    [
+      0.96,
+      0.4622356495468278
+    ]
+  ],
+  "counter_seam_fit": {
+    "equation": "x = .46342175 - .01712586*sin(6.15805702*y+.53917966)",
+    "image_measurement": "Mean RGB scanline sigma.65px minus sigma5px; local highpass maximum in .42..51; center text-obscured rows omitted",
+    "fit_method": "Least-squares sine fitted to six source-image seam positions; text-obscured middle excluded, not an original shader reconstruction"
+  },
+  "features": {
+    "panel": "Transmitting long column, milky top lip and concentrated upper-right return, weak interrupted rim, pink UI accents retained from086. No repeated HUD folds.",
+    "target": "Smoked transmitting body, strong broad curved right fold, secondary reflection, near-vertical bright right line and detached lower-right quarter-arc",
+    "counter": "Narrow central S-seam, soft left fold and detached lower-right quarter-arc",
+    "soft": "Low-energy bottom fold for music/watermark/potions/other cards; no target fold/strong seam/exterior arc"
+  },
+  "transport": {
+    "profile_lanes": {
+      "PANEL": 0,
+      "TARGET": 1,
+      "COUNTER": 2,
+      "SOFT": 3
+    },
+    "lane_stride": 256,
+    "body": "lane*256 + opacityBucket + refractionFraction",
+    "shadow": "-(lane*256 + spread)",
+    "rim": "lane*256 +100+width",
+    "external_arc": "lane*256+192, emitted ONLY for TARGET/COUNTER",
+    "body_color": "R=strength/2; G/B=neutral tint luminance; A=density. Not a visible RGB tint.",
+    "fallback": "No framebuffer: readable neutral CSS fill only, no claimed optical reconstruction"
+  },
+  "acceptance_limits": [
+    "No current-game baseline per user choice reference_only",
+    "No same-scene pixel-difference acceptance",
+    "No original client shader, original font/layout or uncompressed source game capture",
+    "EGL samples do not validate game scheduling, Android drivers or full Gradle build",
+    "JPEG source trace tolerance measures narrow feature positions, NOT whole-image fidelity"
+  ]
+}

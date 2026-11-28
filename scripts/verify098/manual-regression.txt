@@ -1,0 +1,5 @@
+PASS: complete production manual adapter/state and VFP bridge compile against real MC26.3/VFP; module/protocol-selector/bootstrap facades are compile hosts.
+PASS: 77850 manual-use state assertions; 4096 repeated presses, held idempotence, failed sends, release/slot/stack/world/player/connection boundaries, release fault cleanup. No game/server runtime claim.
+PASS: exact HEAD/RETURN item-use hook bodies compile; cancellation checked before held/recovery, post-use observers receive adjusted result. Not Mixin application.
+PASS: 24582 exact input-hook assertions; no-feature path retains vanilla branch/click counts/release ownership; active manual fallback and MultiActions/aura takeover modeled. Hosted, not game runtime.
+PASS: restoring the old forced-false input result is rejected by negative control.

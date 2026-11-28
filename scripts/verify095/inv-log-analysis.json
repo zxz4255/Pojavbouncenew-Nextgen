@@ -1,0 +1,14 @@
+{
+  "input_sha256": "f1613236a7ba986f6e124319b24582df9870b9b3e6fdea4379b68178ca4bb659",
+  "enable_requests": 23,
+  "disable_requests": 23,
+  "disable_origin": "23/23 NeoInvHotkeys.release, bindAction=HOLD",
+  "first_cycle": {
+    "enable_ms": 48047,
+    "release_disable_ms": 48212,
+    "held_ms": 165
+  },
+  "committed": "all 23 enable and 23 disable requests committed as requested",
+  "conclusion": "This capture establishes HOLD-release deactivation, not a spontaneous module-internal shutdown. It does not rule out unrelated failures outside this capture. User approved one-time HOLD→TOGGLE migration.",
+  "privacy": "No original log, session IDs, full stack or device paths are copied into the source package."
+}

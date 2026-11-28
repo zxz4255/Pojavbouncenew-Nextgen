@@ -1,0 +1,18 @@
+Hosts: real Value setter/delegation, ToggleableValueGroup lifecycle/child traversal, ClientModule lifecycle/feedback and complete Neo code will compile unmodified. Game/event/DSL/config/bind services hosted.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.jetbrains.kotlin.org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt (file:/home/user/.cache/verify-env/kotlin/kotlin-compiler-embeddable.jar)
+WARNING: Please consider reporting this to the maintainers of class org.jetbrains.kotlin.cli.jvm.compiler.jarfs.FastJarFileSystemKt
+WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoInvManager.kt:30:12: warning: expression is unused.
+    init { NeoInvHotkeys }
+           ^^^^^^^^^^^^^
+PASS: complete actual Value/ToggleableValueGroup/ClientModule/Neo/Shortcuts chain enables, disables and retains state; GUI description has 092 marker. Game/bind/DSL/services are hosts, not a game test.
+PASS: opt-in traces distinguish request/no-op/transform/immutable/reject/apply/post-commit failures; broken diagnostic consumers do not veto real writes; traced/untraced states and flows match.
+PASS: injected Neo enable rejection and a subsequent external disable are distinguished on the complete actual setter/lifecycle chain; external disable is HONORED, never forced back on.
+PASS: dedicated file + latest-log mirror, full origin stack, session/build/thread/state fields, 2MiB rotation, 2048-entry cap and unwritable-directory/logger-failure behavior.
+PASS: 6148 assertions. NOT a reproduction of the user's device failure; no root-cause/final-fix claim.

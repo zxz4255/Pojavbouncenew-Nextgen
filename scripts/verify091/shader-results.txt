@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "checks": 480,
+  "maxRGBAError": 2.384185791015625e-07,
+  "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+  "coverage": "production accumulation fragment + official screenquad vertex (gl_VertexIndex to GL built-in), std140 UBO, 4 dimensions, 60-frame real ping-pong each; no game/HUD/Mixin/Pojav validation"
+}

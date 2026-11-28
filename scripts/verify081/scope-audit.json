@@ -1,0 +1,77 @@
+{
+  "baseline": "080",
+  "baseline_sha256": "00fa0cf22100e6887214b923aab91a36f5516ffe725544e5b2f4a937245a1851",
+  "baseline_files": 2576,
+  "changed": [
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouClient.kt",
+      "before": "4a45ff57ab97801f035321e55df5fa2d1c0d040e56bef5a5a17ebd5294dbef99",
+      "after": "de163317074d057193874daf89dc225c6d2ce431d22ee93990f9a84661e3ffdd"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouLocalFiles.kt",
+      "before": "2f670cc7f18d9f0e88379591363d7117d1dc86006c790420206f95f504fb1d38",
+      "after": "85d695c9d2a1c784bcc6722ee2ed147b7efdb1b494db316a4448d80bc19e2577"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicManager.kt",
+      "before": "ac4990632248942654827712466ad714acc4bf0dedd03fba330e5317617d7bab",
+      "after": "698dfcff29da5dcb17b53ab85e84d4d9412c86087652ee58aa04a78643b5c36a"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicScreen.kt",
+      "before": "045688bd11e10622e47fc76c0b859af91ab709723d756695e1ed59ece859431e",
+      "after": "3f76d1add6c17e4ea77b179d72f6e7e48dcb800963364683be230fddcc4a993e"
+    }
+  ],
+  "identical_count": 2572,
+  "deleted": [],
+  "added": [
+    "081-KGG-ONLINE-KEYS.md",
+    "references/kgg081/LICENSE-MakcRe.txt",
+    "references/kgg081/README.md",
+    "references/kgg081/config.json",
+    "references/kgg081/helper.js",
+    "references/kgg081/index.js",
+    "references/kgg081/request.js",
+    "references/kgg081/source-lock.json",
+    "references/kgg081/upstream-song_url_new.js",
+    "scripts/verify081/OnlineKeyRegression.kt",
+    "scripts/verify081/README.md",
+    "scripts/verify081/audit-package.py",
+    "scripts/verify081/reference-request.cjs",
+    "scripts/verify081/reference-request.json",
+    "scripts/verify081/results.txt",
+    "scripts/verify081/run.sh",
+    "scripts/verify081/scope-audit.json",
+    "scripts/verify081/source-check.py",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouOnlineKeys.kt"
+  ],
+  "packaged_count": 2595,
+  "excluded_generated": [
+    ".gradle/9.8.0/checksums/checksums.lock",
+    ".gradle/9.8.0/checksums/md5-checksums.bin",
+    ".gradle/9.8.0/checksums/sha1-checksums.bin",
+    ".gradle/9.8.0/fileHashes/fileHashes.bin",
+    ".gradle/9.8.0/fileHashes/fileHashes.lock",
+    ".gradle/9.8.0/fileHashes/resourceHashesCache.bin",
+    ".gradle/9.8.0/kotlin-dsl-plugin-entries/jar-entries.bin",
+    ".gradle/9.8.0/kotlin-dsl-plugin-entries/kotlin-dsl-plugin-entries.lock",
+    ".gradle/buildOutputCleanup/buildOutputCleanup.lock",
+    ".gradle/buildOutputCleanup/cache.properties",
+    ".gradle/configuration-cache/b19f1dc5-e20e-44f8-9943-4ed1554803cd/buildfingerprint8595173623672272983.tmp",
+    ".gradle/configuration-cache/b19f1dc5-e20e-44f8-9943-4ed1554803cd/classloaderscopes5288870325682832049.tmp",
+    ".gradle/configuration-cache/b19f1dc5-e20e-44f8-9943-4ed1554803cd/projectfingerprint4117497509771925190.tmp",
+    ".gradle/configuration-cache/configuration-cache.lock",
+    ".gradle/file-system.probe",
+    ".gradle/noVersion/buildLogic.lock",
+    "buildSrc/.gradle/9.8.0/executionHistory/executionHistory.bin",
+    "buildSrc/.gradle/9.8.0/executionHistory/executionHistory.lock",
+    "buildSrc/.gradle/buildOutputCleanup/buildOutputCleanup.lock",
+    "buildSrc/.gradle/buildOutputCleanup/cache.properties",
+    "buildSrc/.gradle/buildOutputCleanup/outputFiles.bin",
+    "buildSrc/.gradle/file-system.probe",
+    "buildSrc/.kotlin/sessions/kotlin-compiler-9356461255918933754.salive"
+  ],
+  "protected": "All baseline files except four explicit music integration/UI files are byte-identical, including 080 Neo compile fixes, knife, inventory, chest, ClickGUI, Island, old crypto and historical tests/configuration."
+}

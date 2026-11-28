@@ -1,0 +1,7 @@
+PASS: pinned actual Minecraft26.3/ViaFabricPlus5.1.1 artifact SHA256
+PASS: immutable082 negative-source controls; extracted083 cursor hooks verbatim; complete helpers and complete MixinItem selected
+PASS: complete AndroidGuiCursor / LegacySwordBlocking / MixinItem and exact added cursor hook bodies javac against actual MC26.3 + VFP5.1.1 + SDL APIs
+PASS: 083 real MC26.3 API/bytecode audit 77 checks; 7 injection target descriptors, callback kinds, unique applyCursor call + live graphics LVT; actual SDL release gap; no item mutation/raw send. Not a full Mixin application or Gradle build.
+PASS: 083 Android/sword 7085 assertions; real-MC-compiled production helpers/MixinItem and exact cursor hooks executed with explicit runtime hosts, 1000 simulated round/player/world/connection replacements; NOT actual SDL painting, Mixin transformation, network protocol translation or server matches
+PASS: 083 desktop cursor non-interference 2 assertions
+PASS: 083 no-Via separate JVM, 1000 safe sword queries and Android GUI recovery without optional Via facade

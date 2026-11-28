@@ -1,0 +1,283 @@
+{
+  "cls": "R171",
+  "name": "KillAura",
+  "category": "combat",
+  "enabled": false,
+  "noToggle": false,
+  "hidden": false,
+  "key": 0,
+  "lite": true,
+  "failed": null,
+  "settings": [
+    {
+      "t": "slider",
+      "name": "APS",
+      "prefix": "",
+      "suffix": "",
+      "value": 12.0,
+      "min": 1.0,
+      "max": 20.0,
+      "step": 0.5,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "Attack on damage",
+      "prefix": "",
+      "suffix": " ticks",
+      "value": 3.0,
+      "min": 0.0,
+      "max": 10.0,
+      "step": 1.0,
+      "options": null,
+      "labels": {
+        "0.0": "§cDisabled",
+        "1.0": "§b1 tick"
+      }
+    },
+    {
+      "t": "mode",
+      "name": "AutoBlock",
+      "prefix": "",
+      "suffix": "",
+      "value": 0.0,
+      "min": 0.0,
+      "max": 9.0,
+      "step": 1.0,
+      "options": [
+        "Manual",
+        "Vanilla",
+        "Damage",
+        "Fake",
+        "Interact A",
+        "Interact B",
+        "Interact C",
+        "Interact D",
+        "Swap",
+        "Dual"
+      ],
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "AutoBlock APS",
+      "prefix": "",
+      "suffix": "",
+      "value": 10.0,
+      "min": 1.0,
+      "max": 20.0,
+      "step": 0.5,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "AutoBlock lag",
+      "prefix": "",
+      "suffix": "%",
+      "value": 100.0,
+      "min": 0.0,
+      "max": 100.0,
+      "step": 2.0,
+      "options": null,
+      "labels": {
+        "0.0": "§cDisabled"
+      }
+    },
+    {
+      "t": "slider",
+      "name": "FOV",
+      "prefix": "",
+      "suffix": "",
+      "value": 360.0,
+      "min": 20.0,
+      "max": 360.0,
+      "step": 5.0,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "Range (attack)",
+      "prefix": "",
+      "suffix": "",
+      "value": 3.0,
+      "min": 3.0,
+      "max": 10.0,
+      "step": 0.1,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "Range (swing)",
+      "prefix": "",
+      "suffix": "",
+      "value": 4.0,
+      "min": 3.0,
+      "max": 10.0,
+      "step": 0.1,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "Range (block)",
+      "prefix": "",
+      "suffix": "",
+      "value": 6.0,
+      "min": 3.0,
+      "max": 10.0,
+      "step": 0.1,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "mode",
+      "name": "Rotation mode",
+      "prefix": "",
+      "suffix": "",
+      "value": 0.0,
+      "min": 0.0,
+      "max": 2.0,
+      "step": 1.0,
+      "options": [
+        "Silent",
+        "Lock view",
+        "None"
+      ],
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "Rotation smoothing",
+      "prefix": "",
+      "suffix": "",
+      "value": 0.0,
+      "min": 0.0,
+      "max": 8.0,
+      "step": 0.1,
+      "options": null,
+      "labels": {
+        "0.0": "§cDisabled"
+      }
+    },
+    {
+      "t": "mode",
+      "name": "Sort mode",
+      "prefix": "",
+      "suffix": "",
+      "value": 0.0,
+      "min": 0.0,
+      "max": 3.0,
+      "step": 1.0,
+      "options": [
+        "Distance",
+        "Health",
+        "Hurt time",
+        "Yaw"
+      ],
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "Switch delay",
+      "prefix": "",
+      "suffix": "ms",
+      "value": 150.0,
+      "min": 50.0,
+      "max": 1000.0,
+      "step": 50.0,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "slider",
+      "name": "Targets",
+      "prefix": "",
+      "suffix": "",
+      "value": 3.0,
+      "min": 1.0,
+      "max": 10.0,
+      "step": 1.0,
+      "options": null,
+      "labels": null
+    },
+    {
+      "t": "toggle",
+      "name": "Aim invis",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Attack fireballs",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Attack mobs",
+      "value": true
+    },
+    {
+      "t": "toggle",
+      "name": "Attack players",
+      "value": true
+    },
+    {
+      "t": "toggle",
+      "name": "Disable in inventory",
+      "value": true
+    },
+    {
+      "t": "toggle",
+      "name": "Disable while blocking",
+      "value": true
+    },
+    {
+      "t": "toggle",
+      "name": "Disable while mining",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Disable sprint midair",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Hit through blocks",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Ignore teammates",
+      "value": true
+    },
+    {
+      "t": "toggle",
+      "name": "Manual block",
+      "value": true
+    },
+    {
+      "t": "toggle",
+      "name": "Prioritize enemies",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Require mouse down",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Silent swing while blocking",
+      "value": false
+    },
+    {
+      "t": "toggle",
+      "name": "Weapon only",
+      "value": true
+    }
+  ]
+}

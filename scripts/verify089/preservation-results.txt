@@ -1,0 +1,4 @@
+PASS: immutable088 baseline SHA256; exactly9 scoped production modifications /2691 baseline files byte-identical /0 deleted
+PASS: MVP+locales+module registration,087 aura fixes, native-only cursor/Mixins, knives, old shaders/backdrop/pipelines and historical evidence preserved byte-for-byte
+PASS: explicit per-component reference profiles, padded arc bounds, nested-scope restoration, non-optical fallback, finite emitter guards and6-image source lock
+NOT a full Gradle build, game/Android rendering or whole-image pixel acceptance

@@ -1,0 +1,22 @@
+{
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/cheststealer/ModuleChestStealer.kt": "30890f0bbc88af95a968f97cbf6af4189285065dcc60e13304e285f8434c0277",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/cheststealer/features/FeatureChestAura.kt": "559ec5388db7096526ce38c36fda4525a97909419d12eaf8c7e16cb346b86ad3",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/cheststealer/features/FeatureSilentScreen.kt": "68b26757d4790dfb464c0ab7e77d0e02a49c95397618c63593a4888f00b7c8cc",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeAnimator.kt": "8136db4d4e94c65c63fbcbb89360af0bcf9666008b040dc75c78f95f19d90c32",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeMeshes.kt": "a6b263a6a416eb48fa7653f5ae214ca6988271177c4a499af2bea8f89ff50280",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeSkins.kt": "e7d9ae79274cb066551de93058107f89197a74b63e5f2f3d91a4900bbf2e4025",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/ModuleFpsKnife.kt": "7deb4757b005aff67c043f6d42a7200d693c40f4f23d129cecd8b49645c50dc0",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/world/ModuleChestAura.kt": "badb1bee002f5d9ff7b36c84af515fc20866005d1dcd4c399dbf6c506ce27f2a",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/fpsknife/FpsKnifeRig.kt": "f10495f73d54e792b638cdff64f98e32909434d3d620d1ebf1de719c83b72612",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/ModuleCinematic.kt": "09a1ae16f70204c0ab6645b2d20e385df27d4ee6b2ee3b1f2a722adeb3be96bc",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/ModuleRainReflections.kt": "00cc9b3839a73150f43ba1708a411dfd563a5e3d67e2f01ccb18c84f69e597d1",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/neoraven/NeoCinematicRenderer.kt": "6f2cdecb3c09e7b2088aa5ac356ff86d9fe1695172152e8df0a41b8e650d5d9b",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/neoraven/NeoRainRenderer.kt": "1790c3733c8f234f2c3aa6650b07a4fc49e6c180a717aa6b7a986454c381fe58",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/neoraven/NeoRavenPostEffects.kt": "8cd95f864228c1fbefb21357ea594c2b51537fb601fb53841147c82ed3a29104",
+  "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/neoraven/NeoRavenState.kt": "910a1baaf6b4f66cf59e4f0ac336e19dc0a6c5885be4b83b73c2e92cfa37c5e9",
+  "src/main/resources/resources/liquidbounce/shaders/neoraven/cinematic_high.fsh": "653dac652f8ccbb6dfe5f5409d0ce317576327bbf4123f338310e9a49723f579",
+  "src/main/resources/resources/liquidbounce/shaders/neoraven/cinematic_light.fsh": "07ed5dfee4422b5953b940a4fc6f88632e4dc5e0fb558199a997c7f43799e34c",
+  "src/main/resources/resources/liquidbounce/shaders/neoraven/downsample.fsh": "6df3cc36f8d2feab405fdca5438a17a69fe51f6a8a72db32ce304f55448d1ab4",
+  "src/main/resources/resources/liquidbounce/shaders/neoraven/rain_composite.fsh": "3a6afa528d72c12aca70b5327ce0dd08cadc272348d728d823e710b832f0150f",
+  "src/main/resources/resources/liquidbounce/shaders/neoraven/rain_trace.fsh": "fd6a0affaeb9f129ed30a54b351a503a473e875000e9b46f486361d65027c839"
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "lite": false,
+    "enabled": false,
+    "key": 0,
+    "category": "render",
+    "failed": null,
+    "name": "Cinematic",
+    "hidden": false,
+    "noToggle": false,
+    "settings": [
+      {
+        "t": "slider",
+        "name": "Quality",
+        "min": 0,
+        "max": 1,
+        "step": 1,
+        "value": 1,
+        "options": [
+          "Lightweight",
+          "High"
+        ]
+      },
+      {
+        "t": "slider",
+        "min": 0,
+        "max": 1,
+        "prefix": "",
+        "name": "Ambient occlusion",
+        "suffix": "",
+        "value": 0.75,
+        "step": 0.05
+      },
+      {
+        "t": "slider",
+        "min": 0,
+        "max": 1,
+        "prefix": "",
+        "name": "Bloom",
+        "suffix": "",
+        "value": 0.75,
+        "step": 0.05
+      },
+      {
+        "t": "slider",
+        "min": 0,
+        "max": 1,
+        "prefix": "",
+        "name": "Lens distortion",
+        "suffix": "",
+        "value": 0.75,
+        "step": 0.05
+      },
+      {
+        "t": "slider",
+        "min": 0,
+        "max": 1,
+        "prefix": "",
+        "name": "Eye adaptation",
+        "suffix": "",
+        "value": 0.75,
+        "step": 0.05
+      }
+    ]
+  },
+  {
+    "name": "Rain Reflections",
+    "category": "render",
+    "enabled": false,
+    "noToggle": false,
+    "hidden": false,
+    "key": 0,
+    "lite": false,
+    "failed": null,
+    "settings": []
+  }
+]

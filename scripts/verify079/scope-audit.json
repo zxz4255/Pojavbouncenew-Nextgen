@@ -1,0 +1,69 @@
+{
+  "baseline": "078",
+  "baseline_sha256": "296a4d6487f584866f067107998e5a7626f82d5fc50bb119d966d29b44b99116",
+  "baseline_files": 2538,
+  "changed": [
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouPlayback.kt",
+      "before": "6380eb37c0438f1e26bf1b802968ea0dc6d0e9e4516d47db70f8a8c470fc4127",
+      "after": "00bd5cc331c814f3a372d393a4cd3161c1f7f96ba5c44b2f885f9f9488013988"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicCrossSource.kt",
+      "before": "661917031e73f502f37480df53b67d8399029be6983dc38a4817fc8b4c5dcf0e",
+      "after": "c9b6f0d13109a45aa27e807a206e02f6891d8b5ce65b1115b35e1fa73b18fe1d"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicManager.kt",
+      "before": "2b6396648c06ac115826b0572fa2ef13f8ea4b1c615ee1272c182b2a11e50a73",
+      "after": "ac4990632248942654827712466ad714acc4bf0dedd03fba330e5317617d7bab"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicModels.kt",
+      "before": "d9a10f683ccab3e7a74c4a092fbe767760915f8b8acd2d8a06b40152dc44d865",
+      "after": "1fd157d7af5176ce7e8615129fc7cd0aa68d32d0a966fd68d128cb1348c382b3"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicScreen.kt",
+      "before": "69f54c272f0bafc2fbb9888b981b2ade45261bdac3e0ec1741aeb966a35b6b57",
+      "after": "045688bd11e10622e47fc76c0b859af91ab709723d756695e1ed59ece859431e"
+    }
+  ],
+  "identical_count": 2533,
+  "deleted": [],
+  "added": [
+    "079-KGG-DECRYPTION.md",
+    "references/kgg079/LICENSE",
+    "references/kgg079/README.md",
+    "references/kgg079/THIRD-PARTY-NOTICES.md",
+    "references/kgg079/UPSTREAM-README.md",
+    "references/kgg079/formats.rs",
+    "references/kgg079/lib.rs",
+    "references/kgg079/python-LICENSE",
+    "references/kgg079/python-decrypt_my_audio.py",
+    "references/kgg079/python-kgm_v3_sample.expected",
+    "references/kgg079/python-kgm_v3_sample.kgm",
+    "references/kgg079/python-test_vectors.py",
+    "scripts/verify079/IslandRegression.kt",
+    "scripts/verify079/KggCipherRegression.java",
+    "scripts/verify079/KggIntegrationRegression.kt",
+    "scripts/verify079/ManagerRegression.kt",
+    "scripts/verify079/ProtocolRegression.kt",
+    "scripts/verify079/README.md",
+    "scripts/verify079/audit-package.py",
+    "scripts/verify079/check-ui-wiring.py",
+    "scripts/verify079/make-vectors.py",
+    "scripts/verify079/results.txt",
+    "scripts/verify079/run.sh",
+    "scripts/verify079/scope-audit.json",
+    "scripts/verify079/vectors/synthetic-256-v1.kgg",
+    "scripts/verify079/vectors/synthetic-256-v2.kgg",
+    "scripts/verify079/vectors/synthetic-301-v1.kgg",
+    "scripts/verify079/vectors/synthetic-301-v2.kgg",
+    "scripts/verify079/vectors/synthetic.json",
+    "src/main/java/net/ccbluex/liquidbounce/utils/audio/parser/KggDecryptor.java",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouLocalFiles.kt"
+  ],
+  "packaged_count": 2569,
+  "protected": "Every baseline file except the five explicit music changes is byte-identical; all Island, knife, inventory, chest, ClickGUI, historical tests/docs and logs retained."
+}

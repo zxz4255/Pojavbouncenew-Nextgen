@@ -1,0 +1,1181 @@
+/*
+ * This file is part of LiquidBounce (https://github.com/CCBlueX/LiquidBounce)
+ *
+ * Copyright (c) 2015 - 2026 CCBlueX
+ *
+ * LiquidBounce is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * LiquidBounce is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with LiquidBounce. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+@file:Suppress("NOTHING_TO_INLINE", "TooManyFunctions")
+package net.ccbluex.liquidbounce.render
+
+import com.mojang.renderpearl.api.GpuFormat
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology
+import com.mojang.renderpearl.api.pipeline.BindGroupLayout
+import com.mojang.renderpearl.api.pipeline.BlendFactor
+import com.mojang.renderpearl.api.pipeline.BlendFunction
+import com.mojang.renderpearl.api.pipeline.ColorTargetState
+import com.mojang.renderpearl.api.pipeline.CompareOp
+import com.mojang.renderpearl.api.pipeline.DepthStencilState
+import com.mojang.renderpearl.api.pipeline.RenderPipeline
+import com.mojang.blaze3d.vertex.DefaultVertexFormat
+import com.mojang.renderpearl.api.pipeline.UniformType
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
+import net.ccbluex.fastutil.fastIterator
+import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.utils.client.gpuDevice
+import net.ccbluex.liquidbounce.utils.client.logger
+import net.ccbluex.liquidbounce.utils.kotlin.optional
+import net.minecraft.client.renderer.BindGroupLayouts
+import net.minecraft.client.renderer.RenderPipelines
+import net.minecraft.resources.Identifier
+import net.minecraft.util.Util
+
+object ClientRenderPipelines {
+
+    private val renderPipelines = Object2ObjectOpenHashMap<Identifier, RenderPipeline>()
+
+    internal inline fun newPipeline(
+        name: String,
+        builderAction: RenderPipeline.Builder.() -> Unit,
+    ): RenderPipeline {
+        val id = LiquidBounce.identifier("pipeline/$name")
+        return RenderPipeline.Builder()
+            .withLocation(id)
+            .apply(builderAction)
+            .build().also { r ->
+                RenderPipelines.register(r)
+                renderPipelines.put(id, r)?.let { error("Duplicated render pipeline: $id") }
+            }
+    }
+
+    private inline fun RenderPipeline.Builder.bgraPosTexColorQuads() {
+        withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
+        withBindGroupLayout(BindGroupLayouts.PROJECTION)
+        withVertexShader("core/position_tex_color")
+        withFragmentShader(ClientShaders.Fragment.BgraPosTex)
+        withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    inline fun RenderPipeline.Builder.withBindGroupLayout(block: BindGroupLayout.Builder.() -> Unit) =
+        this.withBindGroupLayout(BindGroupLayout.builder().apply(block).build())
+
+    inline fun BindGroupLayout.Builder.withSampler(name: String) =
+        this.withUniform(name, UniformType.COMBINED_IMAGE_SAMPLER)
+
+    inline fun BindGroupLayout.Builder.withUniformBuffer(define: ClientUniformDefine) = define.appendTo(this)
+
+    inline fun RenderPipeline.Builder.withUniformBuffer(define: ClientUniformDefine) =
+        withBindGroupLayout(define.bindGroupLayout)
+
+    private inline fun RenderPipeline.Builder.forWorldRender(noDepthTest: Boolean = true) {
+        withCull(false)
+        withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+        if (noDepthTest) withDepthStencilState(optional())
+    }
+
+    inline fun RenderPipeline.Builder.screenQuadSnippet() = apply {
+        withVertexShader("core/screenquad")
+        withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
+    }
+
+    private fun RenderPipeline.Builder.posColorSnippet(mode: PrimitiveTopology) {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
+        withPrimitiveTopology(mode)
+    }
+
+    private inline fun RenderPipeline.Builder.relativePosSnippet(mode: PrimitiveTopology) {
+        withVertexShader(ClientShaders.Vertex.PosRelativeToCamera)
+        withFragmentShader(ClientShaders.Fragment.PosRelativeToCamera)
+        withVertexBinding(0, DefaultVertexFormat.POSITION)
+        withPrimitiveTopology(mode)
+    }
+
+    private inline fun RenderPipeline.Builder.relativePosColorSnippet(mode: PrimitiveTopology) {
+        withVertexShader(ClientShaders.Vertex.PosColorRelativeToCamera)
+        withFragmentShader("core/position_color")
+        withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
+        withPrimitiveTopology(mode)
+    }
+
+    // Browsers paint with premultiplied alpha
+    object BROWSER {
+        @JvmField
+        val Texture = newPipeline("browser/texture") {
+            withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT_PREMULTIPLIED_ALPHA))
+        }
+
+        @JvmField
+        val BgraTexture = newPipeline("browser/bgra_texture") {
+            bgraPosTexColorQuads()
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT_PREMULTIPLIED_ALPHA))
+        }
+    }
+
+    object GUI {
+        private fun RenderPipeline.Builder.guiPosColorSnippet(mode: PrimitiveTopology) {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
+            withPrimitiveTopology(mode)
+        }
+
+        private val CircleLut = newPipeline("gui/circle_lut") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.GuiCircleLut)
+            withFragmentShader(ClientShaders.Fragment.GuiCircleLut)
+            withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+            withVertexBinding(0, ClientVertexFormats.GUI_CIRCLE_LUT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+        }
+
+        private val RoundedRect = newPipeline("gui/rounded_rect") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.GuiRoundedRect)
+            withFragmentShader(ClientShaders.Fragment.GuiRoundedRect)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+        }
+
+        private val CssBox = newPipeline("gui/css_box") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.GuiCssBox)
+            withFragmentShader(ClientShaders.Fragment.GuiCssBox)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+        }
+
+        private val RoundedTex = newPipeline("gui/rounded_tex") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.GuiRoundedTex)
+            withFragmentShader(ClientShaders.Fragment.GuiRoundedTex)
+            withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+        }
+
+        private val InkReveal = newPipeline("gui/ink_reveal") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.GuiInkReveal)
+            withFragmentShader(ClientShaders.Fragment.GuiInkReveal)
+            withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+        }
+
+        private val ClickGuiLiquidGlass = newPipeline("gui/clickgui_liquid_glass") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.ClickGuiLiquidGlass)
+            withFragmentShader(ClientShaders.Fragment.ClickGuiLiquidGlass)
+            withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+        }
+
+        private val LightPollutionGlass = newPipeline("gui/light_pollution_glass") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.ClickGuiLiquidGlass)
+            withFragmentShader(ClientShaders.Fragment.LightPollutionGlass)
+            withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+        }
+
+        private val World3dHolo = newPipeline("gui/world3d_holo") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.World3dHolo)
+            withFragmentShader(ClientShaders.Fragment.World3dHolo)
+            withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+        }
+
+        private val World3dHoloSolid = newPipeline("gui/world3d_holo_solid") {
+            withSnippet(RenderPipelines.GUI_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.World3dHolo)
+            withFragmentShader(ClientShaders.Fragment.World3dHoloSolid)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+        }
+
+        private val Lines = newPipeline("gui/lines") {
+            guiPosColorSnippet(PrimitiveTopology.DEBUG_LINES)
+        }
+
+        private val Triangles = newPipeline("gui/triangles") {
+            guiPosColorSnippet(PrimitiveTopology.TRIANGLES)
+        }
+
+        private val LinesNoCull = newPipeline("gui/lines_no_cull") {
+            guiPosColorSnippet(PrimitiveTopology.DEBUG_LINES)
+            withCull(false)
+        }
+
+        private val TrianglesNoCull = newPipeline("gui/triangles_no_cull") {
+            guiPosColorSnippet(PrimitiveTopology.TRIANGLES)
+            withCull(false)
+        }
+
+        @JvmField
+        val SmoothTexture = newPipeline("gui/smooth_texture") {
+            withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val TexQuadNoCull = newPipeline("gui/tex_quad_no_cull") {
+            withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+            withCull(false)
+        }
+
+        @JvmField
+        val FontMask = newPipeline("gui/font_mask") {
+            withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+            withFragmentShader(ClientShaders.Fragment.FontMask)
+        }
+
+        @JvmStatic
+        fun lines(cull: Boolean) = if (cull) Lines else LinesNoCull
+
+        @JvmStatic
+        fun triangles(cull: Boolean) = if (cull) Triangles else TrianglesNoCull
+
+        @JvmStatic
+        fun circleLut() = CircleLut
+
+        @JvmStatic
+        fun roundedRect() = RoundedRect
+
+        @JvmStatic
+        fun cssBox() = CssBox
+
+        @JvmStatic
+        fun roundedTex() = RoundedTex
+
+        @JvmStatic
+        fun inkReveal() = InkReveal
+
+        @JvmStatic
+        fun clickGuiLiquidGlass() = ClickGuiLiquidGlass
+
+        @JvmStatic
+        fun lightPollutionGlass() = LightPollutionGlass
+
+        @JvmStatic
+        fun world3dHolo() = World3dHolo
+
+        @JvmStatic
+        fun world3dHoloSolid() = World3dHoloSolid
+    }
+
+    /**
+     * @see RenderPipelines.LINES_TRANSLUCENT
+     */
+    @JvmField
+    val LinesWithWidth = newPipeline("lines_with_width") {
+        withSnippet(RenderPipelines.LINES_SNIPPET)
+        forWorldRender()
+    }
+
+    private val Lines = newPipeline("lines") {
+        posColorSnippet(PrimitiveTopology.DEBUG_LINES)
+        forWorldRender()
+    }
+
+    private val LinesDepthTested = newPipeline("lines_depth_tested") {
+        posColorSnippet(PrimitiveTopology.DEBUG_LINES)
+        forWorldRender(noDepthTest = false)
+    }
+
+    @JvmStatic
+    fun lines(noDepthTest: Boolean) = if (noDepthTest) Lines else LinesDepthTested
+
+    private val LinesRelativeToCamera = newPipeline("lines_relative_to_camera") {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        relativePosColorSnippet(PrimitiveTopology.DEBUG_LINES)
+        withUniformBuffer(ClientUniformDefine.MESH_BASE_BLOCK_POS)
+        withUniformBuffer(ClientUniformDefine.DISTANCE_FADE)
+        forWorldRender()
+    }
+
+    private val LinesRelativeToCameraNoColor = newPipeline("lines_relative_to_camera_no_color") {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        relativePosSnippet(PrimitiveTopology.DEBUG_LINES)
+        withUniformBuffer(ClientUniformDefine.MESH_BASE_BLOCK_POS)
+        withUniformBuffer(ClientUniformDefine.DISTANCE_FADE)
+        forWorldRender()
+    }
+
+    @JvmStatic
+    fun relativeLines(useColor: Boolean) = if (useColor) LinesRelativeToCamera else LinesRelativeToCameraNoColor
+
+    @JvmField
+    val LineStrip = newPipeline("line_strip") {
+        posColorSnippet(PrimitiveTopology.DEBUG_LINE_STRIP)
+        forWorldRender()
+    }
+
+    private val Triangles = newPipeline("triangles") {
+        posColorSnippet(PrimitiveTopology.TRIANGLES)
+        forWorldRender()
+    }
+
+    private val TrianglesDepthTested = newPipeline("triangles_depth_tested") {
+        posColorSnippet(PrimitiveTopology.TRIANGLES)
+        forWorldRender(noDepthTest = false)
+    }
+
+    @JvmStatic
+    fun triangles(noDepthTest: Boolean) = if (noDepthTest) Triangles else TrianglesDepthTested
+
+    private val TriangleStrip = newPipeline("triangle_strip") {
+        posColorSnippet(PrimitiveTopology.TRIANGLE_STRIP)
+        forWorldRender(noDepthTest = false)
+    }
+
+    private val TriangleStripNoDepthTest = newPipeline("triangle_strip_no_depth_test") {
+        posColorSnippet(PrimitiveTopology.TRIANGLE_STRIP)
+        forWorldRender(noDepthTest = true)
+    }
+
+    @JvmStatic
+    fun triangleStrip(noDepthTest: Boolean) = if (noDepthTest) TriangleStripNoDepthTest else TriangleStrip
+
+    private val Quads = newPipeline("quads") {
+        posColorSnippet(PrimitiveTopology.QUADS)
+        forWorldRender()
+    }
+
+    private val QuadsDepthTested = newPipeline("quads_depth_tested") {
+        posColorSnippet(PrimitiveTopology.QUADS)
+        forWorldRender(noDepthTest = false)
+    }
+
+    @JvmStatic
+    fun quads(noDepthTest: Boolean) = if (noDepthTest) Quads else QuadsDepthTested
+
+    private val QuadsRelativeToCamera = newPipeline("quads_relative_to_camera") {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        relativePosColorSnippet(PrimitiveTopology.QUADS)
+        withUniformBuffer(ClientUniformDefine.MESH_BASE_BLOCK_POS)
+        withUniformBuffer(ClientUniformDefine.DISTANCE_FADE)
+        forWorldRender()
+    }
+
+    private val QuadsRelativeToCameraNoColor = newPipeline("quads_relative_to_camera_no_color") {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        relativePosSnippet(PrimitiveTopology.QUADS)
+        withUniformBuffer(ClientUniformDefine.MESH_BASE_BLOCK_POS)
+        withUniformBuffer(ClientUniformDefine.DISTANCE_FADE)
+        forWorldRender()
+    }
+
+    @JvmStatic
+    fun relativeQuads(useColor: Boolean) = if (useColor) QuadsRelativeToCamera else QuadsRelativeToCameraNoColor
+
+    /**
+     * @see net.ccbluex.liquidbounce.features.module.modules.render.ModuleStorageESP
+     * @see net.ccbluex.liquidbounce.features.module.modules.render.ModuleBlockESP
+     */
+    private val OutlineQuads = newPipeline("outline_quads") {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.PosColorRelativeToCamera)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        withUniformBuffer(ClientUniformDefine.MESH_BASE_BLOCK_POS)
+        withUniformBuffer(ClientUniformDefine.DISTANCE_FADE)
+        forWorldRender()
+    }
+
+    private val OutlineQuadsNoColor = newPipeline("outline_quads_no_color") {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.PosRelativeToCamera)
+        withFragmentShader(ClientShaders.Fragment.PosRelativeToCamera)
+        withVertexBinding(0, DefaultVertexFormat.POSITION)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        withUniformBuffer(ClientUniformDefine.MESH_BASE_BLOCK_POS)
+        withUniformBuffer(ClientUniformDefine.DISTANCE_FADE)
+        forWorldRender()
+    }
+
+    @JvmStatic
+    fun outlineQuads(useColor: Boolean) = if (useColor) OutlineQuads else OutlineQuadsNoColor
+
+    private val TexQuads = newPipeline("tex_quads") {
+        withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        forWorldRender()
+    }
+
+    private val TexQuadsDepthTested = newPipeline("tex_quads_depth_tested") {
+        withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        forWorldRender(noDepthTest = false)
+        withDepthStencilState(DepthStencilState.DEFAULT)
+    }
+
+    @JvmStatic
+    fun texQuads(noDepthTest: Boolean) = if (noDepthTest) TexQuads else TexQuadsDepthTested
+
+    @JvmField
+    val FontMaskQuads = newPipeline("font_mask_quads") {
+        withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+        withFragmentShader(ClientShaders.Fragment.FontMask)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        forWorldRender()
+    }
+
+    private fun RenderPipeline.Builder.roundedRectSnippet() {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.Circle)
+        withFragmentShader(ClientShaders.Fragment.RoundedRect)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        withUniformBuffer(ClientUniformDefine.ROUNDED_RECT)
+    }
+
+    private fun RenderPipeline.Builder.gradientCircleSnippet() {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.GradientCircle)
+        withFragmentShader(ClientShaders.Fragment.GradientCircle)
+        withVertexBinding(0, ClientVertexFormats.GRADIENT_CIRCLE)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    private val RoundedRect = newPipeline("rounded_rect") {
+        roundedRectSnippet()
+        forWorldRender(noDepthTest = false)
+    }
+
+    private val RoundedRectNoDepthTest = newPipeline("rounded_rect_no_depth_test") {
+        roundedRectSnippet()
+        forWorldRender(noDepthTest = true)
+    }
+
+    fun roundedRect(noDepthTest: Boolean) = if (noDepthTest) RoundedRectNoDepthTest else RoundedRect
+
+    private val GradientCircle = newPipeline("gradient_circle") {
+        gradientCircleSnippet()
+        forWorldRender(noDepthTest = false)
+    }
+
+    private val GradientCircleNoDepthTest = newPipeline("gradient_circle_no_depth_test") {
+        gradientCircleSnippet()
+        forWorldRender(noDepthTest = true)
+    }
+
+    fun gradientCircle(noDepthTest: Boolean) =
+        if (noDepthTest) GradientCircleNoDepthTest else GradientCircle
+
+    private fun RenderPipeline.Builder.heartSdfSnippet() {
+        withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.Circle)
+        withFragmentShader(ClientShaders.Fragment.HeartSDF)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    private val Heart = newPipeline("heart") {
+        heartSdfSnippet()
+        forWorldRender(noDepthTest = false)
+    }
+
+    private val HeartNoDepthTest = newPipeline("heart_no_depth_test") {
+        heartSdfSnippet()
+        forWorldRender(noDepthTest = true)
+    }
+
+    fun heart(noDepthTest: Boolean) = if (noDepthTest) HeartNoDepthTest else Heart
+
+    // Special
+
+    /**
+     * @see RenderPipelines.ENTITY_OUTLINE_BLIT
+     * @see RenderPipelines.OUTLINE_SNIPPET
+     */
+    @JvmField
+    val Outline = newPipeline("outline") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.EntityOutline)
+        withBindGroupLayout(BindGroupLayouts.IN_SAMPLER)
+        withColorTargetState(
+            ColorTargetState(
+                optional(BlendFunction.ENTITY_OUTLINE_BLIT),
+                GpuFormat.RGBA8_UNORM,
+                ColorTargetState.WRITE_COLOR,
+            )
+        )
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val ChamsImage = newPipeline("chams/image_blit") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.Chams)
+        withBindGroupLayout {
+            withSampler("entityColor")
+            withSampler("entityDepth")
+            withSampler("sceneDepth")
+            withSampler("image")
+        }
+        withUniformBuffer(ClientUniformDefine.CHAMS)
+        withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val ItemChams = newPipeline("item_chams") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.Glow)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withSampler("image")
+            withUniformBuffer(ClientUniformDefine.HAND_ITEM_LIGHTMAP)
+        }
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    /** Erase only the reserved ScreenshotESP key before vanilla's outline post-chain. */
+    @JvmField
+    val ScreenshotEspRemoveMask = newPipeline("screenshot_esp/remove_mask") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ScreenshotEspRemoveMask)
+        withBindGroupLayout(BindGroupLayouts.IN_SAMPLER)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val ScreenshotEspHalo = newPipeline("screenshot_esp/halo") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ScreenshotEspHalo)
+        withBindGroupLayout {
+            withSampler("outlineTex")
+            withSampler("depthTex")
+            withUniformBuffer(ClientUniformDefine.SCREENSHOT_ESP)
+        }
+        withColorTargetState(ColorTargetState(BlendFunction.ADDITIVE))
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val ScreenshotEspShadow = newPipeline("screenshot_esp/shadow") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ScreenshotEspHalo)
+        withBindGroupLayout {
+            withSampler("outlineTex")
+            withSampler("depthTex")
+            withUniformBuffer(ClientUniformDefine.SCREENSHOT_ESP)
+        }
+        withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+        withDepthStencilState(optional())
+    }
+
+    /**
+     * Additive effect layer (flow, trail, glow, chromatic, scanlines) drawn over the held item.
+     */
+    @JvmField
+    val ItemChamsEffects = newPipeline("item_chams/effects") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ItemChamsEffects)
+        withBindGroupLayout {
+            withSampler("capture")
+            withSampler("depthTex")
+            withSampler("trail")
+            withUniformBuffer(ClientUniformDefine.ITEM_CHAMS_EFFECTS)
+        }
+        withColorTargetState(ColorTargetState(BlendFunction.ADDITIVE))
+        withDepthStencilState(optional())
+    }
+
+    /**
+     * Recovers the held item from the capture with an animated hue/brightness shift.
+     */
+    @JvmField
+    val ItemChamsRecolor = newPipeline("item_chams/recolor") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ItemChamsRecolor)
+        withBindGroupLayout {
+            withSampler("capture")
+            withSampler("depthTex")
+            withUniformBuffer(ClientUniformDefine.ITEM_CHAMS_EFFECTS)
+        }
+        withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+        withDepthStencilState(optional())
+    }
+
+    /**
+     * Accumulates the captured held item into the trail history buffer with decay.
+     */
+    @JvmField
+    val ItemChamsTrail = newPipeline("item_chams/trail") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ItemChamsTrail)
+        withBindGroupLayout {
+            withSampler("capture")
+            withSampler("depthTex")
+            withSampler("history")
+            withUniformBuffer(ClientUniformDefine.ITEM_CHAMS_EFFECTS)
+        }
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val ChamsBlit: RenderPipeline = newPipeline("chams/blit") {
+        screenQuadSnippet()
+        withFragmentShader("core/blit_screen")
+        withBindGroupLayout(BindGroupLayouts.IN_SAMPLER)
+        withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val GuiBlurH = newPipeline("blur_h") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.GuiBlurH)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withUniformBuffer(ClientUniformDefine.GUI_BLUR_KERNEL)
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val GuiBlurV = newPipeline("blur_v") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.GuiBlurV)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withSampler("overlay")
+            withUniformBuffer(ClientUniformDefine.GUI_BLUR)
+            withUniformBuffer(ClientUniformDefine.GUI_BLUR_KERNEL)
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+        withDepthStencilState(optional())
+    }
+
+    /**
+     * @see RenderPipelines.ENTITY_OUTLINE_BLIT
+     */
+    @JvmField
+    val GuiBlurBlit = newPipeline("blur_blit") {
+        screenQuadSnippet()
+        withFragmentShader("core/blit_screen")
+        withBindGroupLayout(BindGroupLayouts.IN_SAMPLER)
+        withColorTargetState(
+            ColorTargetState(
+                optional(BlendFunction.TRANSLUCENT_PREMULTIPLIED_ALPHA),
+                GpuFormat.RGBA8_UNORM,
+                ColorTargetState.WRITE_COLOR,
+            )
+        )
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val Blend = newPipeline("blend") {
+        withVertexShader(ClientShaders.Vertex.PlainPosTex)
+        withFragmentShader(ClientShaders.Fragment.Blend)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX)
+        withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
+        withBindGroupLayout {
+            withSampler("texture0")
+        }
+        withUniformBuffer(ClientUniformDefine.BLEND)
+        withColorTargetState(ColorTargetState.DEFAULT)
+    }
+
+    /** Health-scaled red screen-edge vignette, evaluated by a dedicated shader pair. */
+    @JvmField
+    val LowHealthVignette = newPipeline("gui/low_health_vignette") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.LowHealthVignette)
+        withFragmentShader(ClientShaders.Fragment.LowHealthVignette)
+        withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        withCull(false)
+    }
+
+    /** Rounded SDF shadow for Onyx HUD cards; one quad with a continuous falloff. */
+    @JvmField
+    val OnyxSoftShadow = newPipeline("onyx/soft_shadow") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.OnyxSoftShadow)
+        withFragmentShader(ClientShaders.Fragment.OnyxSoftShadow)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    /** Opai-only exterior shadow; body cutout prevents a dark inner ring on translucent shells. */
+    @JvmField
+    val OpaiIslandShadow = newPipeline("opai/island_shadow") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.OnyxSoftShadow)
+        withFragmentShader(ClientShaders.Fragment.OpaiIslandShadow)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+        withCull(false)
+    }
+
+    /**
+     * Music panel shadow. Same vertex layout as [OnyxSoftShadow] but a softer, dithered profile that
+     * follows the corner radius, so the halo of a large card no longer shows the concentric rings the
+     * layered rounded rectangles produced.
+     *
+     * @see ClientVertexFormats.GUI_ROUNDED_RECT
+     */
+    @JvmField
+    val MusicPanelShadow = newPipeline("music/panel_shadow") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.MusicPanelShadow)
+        withFragmentShader(ClientShaders.Fragment.MusicPanelShadow)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    /**
+     * Analytic glow for the arraylist module. One quad per row, no stacked shadow layers.
+     *
+     * @see ClientVertexFormats.GUI_GLOW
+     */
+    @JvmField
+    val ArrayListGlow = newPipeline("arraylist/glow") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.ArrayListGlow)
+        withFragmentShader(ClientShaders.Fragment.ArrayListGlow)
+        withVertexBinding(0, ClientVertexFormats.GUI_GLOW)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    /**
+     * Vertical half of the arraylist backdrop blur, mirrors [GuiBlurH] but along the other axis.
+     */
+    @JvmField
+    val ArrayListBackdropBlurV = newPipeline("arraylist/backdrop_blur_v") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ArrayListBackdropBlurV)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withUniformBuffer(ClientUniformDefine.GUI_BLUR_KERNEL)
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    /**
+     * Palette glow quad. Same closed form gaussian as [ArrayListGlow], but the fragment stage also
+     * disperses the colour channels and boosts the edge, so the glow takes the palette colour.
+     *
+     * @see ClientVertexFormats.GUI_GLOW
+     */
+    @JvmField
+    val ArrayListGlowTone = newPipeline("arraylist/glow_tone") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.ArrayListGlow)
+        withFragmentShader(ClientShaders.Fragment.ArrayListGlow2)
+        withVertexBinding(0, ClientVertexFormats.GUI_GLOW)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+
+    /**
+     * SDF surface of an arraylist row, drawn by `shaders/gui/arraylist_row.fsh`.
+     *
+     * @see ClientVertexFormats.GUI_ROUNDED_RECT
+     */
+    @JvmField
+    val ArraylistRow = newPipeline("arraylist/row") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.ArrayListShape)
+        withFragmentShader(ClientShaders.Fragment.ArrayListRow)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    /**
+     * Tilted light sweep of an arraylist row.
+     *
+     * @see ClientVertexFormats.GUI_ROUNDED_RECT
+     */
+    @JvmField
+    val ArraylistSheen = newPipeline("arraylist/sheen") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.ArrayListShape)
+        withFragmentShader(ClientShaders.Fragment.ArrayListSheen)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    /**
+     * SDF stroke that follows the row outline.
+     *
+     * @see ClientVertexFormats.GUI_ROUNDED_RECT
+     */
+    @JvmField
+    val ArraylistRim = newPipeline("arraylist/rim") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.ArrayListShape)
+        withFragmentShader(ClientShaders.Fragment.ArrayListRim)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    // Dedicated Keybinds passes; no changes to the shared Onyx Blur or Arraylist backdrop.
+    @JvmField
+    val KeybindsBoxH = newPipeline("keybinds/box_h") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.KeybindsBoxH)
+        withBindGroupLayout { withSampler("texture0") }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val KeybindsBoxV = newPipeline("keybinds/box_v") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.KeybindsBoxV)
+        withBindGroupLayout { withSampler("texture0") }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val KeybindsFrost = newPipeline("keybinds/frost") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.KeybindsFrost)
+        withFragmentShader(ClientShaders.Fragment.KeybindsFrost)
+        withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    // Music uses dedicated targets/pipelines; Keybinds and shared HUD blur are untouched.
+    @JvmField
+    val MusicBoxH = newPipeline("music/box_h") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.MusicBoxH)
+        withBindGroupLayout { withSampler("texture0") }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val MusicBoxV = newPipeline("music/box_v") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.MusicBoxV)
+        withBindGroupLayout { withSampler("texture0") }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val MusicFrost = newPipeline("music/frost") {
+        withSnippet(RenderPipelines.GUI_SNIPPET)
+        withVertexShader(ClientShaders.Vertex.MusicFrost)
+        withFragmentShader(ClientShaders.Fragment.MusicFrost)
+        withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+        withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+        withPrimitiveTopology(PrimitiveTopology.QUADS)
+    }
+
+    @JvmField
+    val ClickGuiGlassBlurH = newPipeline("clickgui/glass_blur_h") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ClickGuiGlassBlurH)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withUniformBuffer(ClientUniformDefine.CLICKGUI_GLASS_BLUR)
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val ClickGuiGlassBlurV = newPipeline("clickgui/glass_blur_v") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.ClickGuiGlassBlurV)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withUniformBuffer(ClientUniformDefine.CLICKGUI_GLASS_BLUR)
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val AtmospherePost = newPipeline("atmosphere/post") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.AtmospherePost)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withSampler("DepthSampler")
+            withUniformBuffer(ClientUniformDefine.ATMOSPHERE)
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val MotionBlur = newPipeline("motionblur/accumulate") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.MotionBlur)
+        withBindGroupLayout {
+            withSampler("texture0")
+            withSampler("historyTexture")
+            withUniformBuffer(ClientUniformDefine.MOTION_BLUR)
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    @JvmField
+    val AtmosphereBlit = newPipeline("atmosphere/blit") {
+        screenQuadSnippet()
+        withFragmentShader(ClientShaders.Fragment.AtmosphereBlit)
+        withBindGroupLayout {
+            withSampler("texture0")
+        }
+        withCull(false)
+        withColorTargetState(ColorTargetState.DEFAULT)
+        withDepthStencilState(optional())
+    }
+
+    object Reflection {
+        @JvmField
+        val WaterGroundPass = newPipeline("reflection/water_ground") {
+            withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
+            withBindGroupLayout(BindGroupLayouts.PROJECTION)
+            withUniformBuffer(ClientUniformDefine.WATER_REFLECTION)
+            withVertexShader(ClientShaders.Vertex.WaterGround)
+            withFragmentShader(ClientShaders.Fragment.WaterGround)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+            withDepthStencilState(DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
+        }
+
+        @JvmField
+        val MirrorGroundPass = newPipeline("reflection/mirror_ground") {
+            withBindGroupLayout {
+                withSampler("SceneColorSampler")
+                withSampler("SceneDepthSampler")
+                withUniformBuffer(ClientUniformDefine.MIRROR_GROUND)
+            }
+            withVertexShader(ClientShaders.Vertex.MirrorGround)
+            withFragmentShader(ClientShaders.Fragment.MirrorGround)
+            withVertexBinding(0, ClientVertexFormats.GUI_ROUNDED_RECT)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+            withColorTargetState(ColorTargetState.DEFAULT)
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val MirrorGroundComposite = newPipeline("reflection/mirror_composite") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.MirrorComposite)
+            withBindGroupLayout {
+                withSampler("MirrorSampler")
+            }
+            withCull(false)
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT_PREMULTIPLIED_ALPHA))
+            withDepthStencilState(optional())
+        }
+    }
+
+    object NeoRaven {
+        @JvmField
+        val CinematicLight = newPipeline("neoraven/cinematic_light") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.CinematicLight)
+            withBindGroupLayout {
+                withSampler("scene"); withSampler("geometry")
+                withUniformBuffer(ClientUniformDefine.CINEMATIC)
+            }
+            withCull(false)
+            withColorTargetState(ColorTargetState.DEFAULT)
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val CinematicHigh = newPipeline("neoraven/cinematic_high") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.CinematicHigh)
+            withBindGroupLayout {
+                withSampler("scene"); withSampler("geometry")
+                for (i in 1..5) withSampler("Mip$i")
+                withUniformBuffer(ClientUniformDefine.CINEMATIC)
+            }
+            withCull(false)
+            withColorTargetState(ColorTargetState.DEFAULT)
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val CinematicDownsample = newPipeline("neoraven/cinematic_downsample") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.CinematicDownsample)
+            withBindGroupLayout { withSampler("texture0") }
+            withCull(false)
+            withColorTargetState(ColorTargetState.DEFAULT)
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val RainTrace = newPipeline("neoraven/rain_trace") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.RainTrace)
+            withBindGroupLayout {
+                withSampler("DepthSampler"); withSampler("SceneSampler"); withSampler("ExposureSampler")
+                withUniformBuffer(ClientUniformDefine.NEO_RAIN)
+            }
+            withCull(false)
+            withColorTargetState(ColorTargetState.DEFAULT)
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val RainComposite = newPipeline("neoraven/rain_composite") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.RainComposite)
+            withBindGroupLayout {
+                withSampler("DepthSampler"); withSampler("ReflectionSampler")
+                withUniformBuffer(ClientUniformDefine.NEO_RAIN)
+            }
+            withCull(false)
+            // Match upstream glBlendFuncSeparate(ONE, ONE_MINUS_SRC_ALPHA, ZERO, ONE).
+            withColorTargetState(ColorTargetState(BlendFunction(
+                BlendFactor.ONE, BlendFactor.ONE_MINUS_SRC_ALPHA, BlendFactor.ZERO, BlendFactor.ONE)))
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val FloatingFogVolume = newPipeline("neoraven/floating_fog_volume") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.FloatingFogVolume)
+            withBindGroupLayout {
+                withSampler("DepthSampler")
+                withUniformBuffer(ClientUniformDefine.FLOATING_FOG)
+            }
+            withColorTargetState(ColorTargetState.DEFAULT)
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val FloatingFogComposite = newPipeline("neoraven/floating_fog_composite") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.FloatingFogComposite)
+            withBindGroupLayout {
+                withSampler("FogSampler")
+                withSampler("DepthSampler")
+                withUniformBuffer(ClientUniformDefine.FLOATING_FOG)
+            }
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT_PREMULTIPLIED_ALPHA))
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val FloatingFogParticles = newPipeline("neoraven/floating_fog_particles") {
+            withSnippet(RenderPipelines.DEBUG_FILLED_SNIPPET)
+            withVertexShader(ClientShaders.Vertex.Circle)
+            withFragmentShader(ClientShaders.Fragment.FloatingFogParticle)
+            withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+            withDepthStencilState(DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
+        }
+
+        @JvmField
+        val HitAfterimageComposite = newPipeline("neoraven/hit_afterimage_composite") {
+            screenQuadSnippet()
+            withFragmentShader(ClientShaders.Fragment.HitAfterimageComposite)
+            withBindGroupLayout {
+                withSampler("coreTex")
+                withSampler("coreDepth")
+                withSampler("shellTex")
+                withSampler("shellDepth")
+                withSampler("sceneDepth")
+                withUniformBuffer(ClientUniformDefine.BLEND)
+            }
+            withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+            withDepthStencilState(optional())
+        }
+
+        @JvmField
+        val OrbitWispQuads = newPipeline("neoraven/orbit_wisp_quads") {
+            withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+            withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+            withColorTargetState(ColorTargetState(BlendFunction(BlendFactor.SRC_ALPHA, BlendFactor.ONE)))
+            withDepthStencilState(DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
+        }
+
+        @JvmField
+        val OrbitWispQuadsNoDepth = newPipeline("neoraven/orbit_wisp_quads_no_depth") {
+            withSnippet(RenderPipelines.GUI_TEXTURED_SNIPPET)
+            withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+            withPrimitiveTopology(PrimitiveTopology.QUADS)
+            withCull(false)
+            withColorTargetState(ColorTargetState(BlendFunction(BlendFactor.SRC_ALPHA, BlendFactor.ONE)))
+            withDepthStencilState(optional())
+        }
+    }
+
+    /**
+     * Precompile
+     */
+    fun precompile() {
+        BROWSER
+        GUI
+        Reflection
+        NeoRaven
+
+        renderPipelines.fastIterator().forEach { (_, pipeline) ->
+            gpuDevice.compilePipeline(pipeline, ClientShaders, Util.backgroundExecutor())
+        }
+        logger.info("Registered ${renderPipelines.size} Render Pipelines.")
+    }
+
+}

@@ -1,0 +1,4 @@
+PASS: EGL OpenGL (llvmpipe (LLVM 19.1.7, 256 bits) | 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1)
+  HUD TARGET/COUNTER/SOFT & 094 Music QUIET max RGBA diff = 0.000000
+  Volumetric White Bloom luma (center -> edge -> +2px -> +8px -> +16px -> bg): 0.6242 -> 0.5605 -> 0.3689 -> 0.3115 -> 0.2905 -> 0.2800
+  Chroma span = 0.00333 (frost-white), padded-quad seam = 0.000000

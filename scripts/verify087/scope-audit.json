@@ -1,0 +1,26 @@
+{
+  "baseline_sha256": "d0e16fdba47a49976a79f9c17ed98cb6b4eb9d5fd7084a9864ab78bacb5c85fc",
+  "baseline_files": 2679,
+  "modified_files": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/combat/neoraven/ModuleNeoKillAura.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/combat/neoraven/ModuleNeoKillAura2.kt"
+  ],
+  "modified_count": 2,
+  "scope": "Only two production field names world -> worldChangeHandler; all callbacks/logic and every other baseline file byte-identical.",
+  "identical_baseline_files": 2677,
+  "deleted_count": 0,
+  "added_files": [
+    "087-NEOAURA-WORLD-HANDLER-FIX.md",
+    "scripts/verify087/README.md",
+    "scripts/verify087/audit-package.py",
+    "scripts/verify087/inherit-shortcuts.py",
+    "scripts/verify087/results.txt",
+    "scripts/verify087/run.sh",
+    "scripts/verify087/scope-audit.json"
+  ],
+  "added_count": 7,
+  "total_files": 2686,
+  "negative_control": "Immutable086 reproduces exactly both reported inherited-world errors with actual MinecraftShortcuts included.",
+  "positive_control": "Fixed six production NeoAura files compile with actual MinecraftShortcuts and AddonApi; 104settings/368API/67460assertions pass. Explicit project hosts remain; not fullGradle/game/Android.",
+  "archive_validation": "Flat root, all bytes compared, all untouched baseline entries checked and ZIP CRC validated by this script."
+}

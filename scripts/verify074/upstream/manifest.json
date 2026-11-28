@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/Matr1ze/NeoRaven",
+  "commit": "b483ffc576e335e01f2914c920e88289ab090e66",
+  "sha256": {
+    "src/main/java/xyz/daikirai/module/render/CinematicModule.java": "2d7e21b729b4df3f841c7ebfb41992210d8845a88753de8a5791f8c812e313c3",
+    "src/main/java/xyz/daikirai/module/render/RainReflectionsModule.java": "95c0ae5f9fabb016b6e1b14eaa9edd2a911f08f2554b20567cbc6c94b3a54397",
+    "src/main/java/xyz/daikirai/render/RainReflectionRenderer.java": "4a8a4488fce2d1ee54f50487ad51106e0cab323c9a4c21074932a75e31b1921d",
+    "src/main/resources/assets/clickgui/shaders/cinematic.frag": "d9f4b5db0b4162f6095b58d2821685e929faea885e2a132aea1b3e424e6751db",
+    "src/main/resources/assets/clickgui/shaders/cinematic-high.frag": "37dd6615a65862fc03df50052b7847b86068efcd74d63218ec7c271fe76ac773",
+    "src/main/resources/assets/onyx/shaders/core/onyx_rain_reflection.fsh": "9e823bb331478b0705ed860eeca68988d563ab0554d9fbe2ee02f42cf5edad8c",
+    "src/main/resources/assets/onyx/shaders/core/onyx_rain_reflection_composite.fsh": "7c02835c8a9675c021f39545934318037d0c7f4560d45f0a9fba636ca4bc9eee"
+  }
+}

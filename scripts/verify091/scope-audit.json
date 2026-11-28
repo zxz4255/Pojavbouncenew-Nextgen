@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "baselineSHA256": "3be501bcca21991b6b6f43b8c90ce4aceafc763d52c7feb06a49dcfdc193a9d5",
+  "modified": [
+    "src/main/java/net/ccbluex/liquidbounce/injection/mixins/minecraft/render/MixinGameRenderer.java",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/ClientModule.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/ModuleManager.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoInvManager.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/render/ClientRenderPipelines.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/render/ClientShaders.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/render/ClientUniformDefine.kt",
+    "src/main/resources/resources/liquidbounce/lang/en_us.json",
+    "src/main/resources/resources/liquidbounce/lang/zh_cn.json",
+    "src/main/resources/resources/liquidbounce/lang/zh_cn_ui.json",
+    "src/main/resources/resources/liquidbounce/lang/zh_tw.json"
+  ],
+  "modifiedCount": 11,
+  "baselineIdenticalCount": 2727,
+  "deleted": [],
+  "newProduction": [
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/NeoInvBindLatch.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/NeoInvHotkeys.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/motionblur/ModuleMotionBlur.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/motionblur/MotionBlurHistory.kt",
+    "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/render/motionblur/MotionBlurRenderer.kt",
+    "src/main/resources/resources/liquidbounce/shaders/motionblur/accumulate.fsh"
+  ],
+  "checks": "registration/bind/defaults/history routing/safety/logs/localization and exact byte-preserving baseline scope; NOT full build/game"
+}

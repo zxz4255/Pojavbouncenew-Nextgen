@@ -1,0 +1,47 @@
+Full-project validation was NOT completed. Initial parallel/default-heap attempts were stopped under the ~2GB sandbox memory limit. The final constrained offline attempt below stopped in Loom configuration before project compileKotlin/compileJava. buildSrc completion is NOT a full-project build.
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Configuration on demand is an incubating feature.
+Calculating task graph as no cached configuration is available for tasks: compileKotlin compileJava
+> Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :
+Fabric Loom: 1.17.12
+
+[Incubating] Problems report is available at: file:///home/user/Pojavbouncenew-Nextgen/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'LiquidBounce'.
+> Failed to notify project evaluation listener.
+   > Failed to calculate the value of extension 'loom' property 'minecraftJarConfiguration'.
+      > Failed download after 3 attempts
+   > Failed to calculate the value of extension 'loom' property 'minecraftJarConfiguration'.
+      > Failed download after 3 attempts
+   > Failed to calculate the value of extension 'loom' property 'minecraftJarConfiguration'.
+      > Failed download after 3 attempts
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 25s
+3 actionable tasks: 3 up-to-date
+Configuration cache entry stored.

@@ -1,0 +1,36 @@
+[
+  {
+    "concept": false,
+    "body": "{\"area_code\":\"1\",\"behavior\":\"play\",\"qualities\":[\"128\",\"320\",\"flac\",\"high\",\"multitrack\",\"viper_atmos\",\"viper_tape\",\"viper_clear\",\"super\"],\"resource\":{\"collect_list_id\":\"3\",\"collect_time\":1700000000123,\"hash\":\"0123456789abcdef0123456789abcdef\",\"id\":0,\"page_id\":1,\"type\":\"audio\"},\"token\":\"syntheticToken081\",\"tracker_param\":{\"all_m\":1,\"auth\":\"\",\"is_free_part\":0,\"key\":\"20f3b70d9317ce6590d9e08764a1b631\",\"module_id\":0,\"need_climax\":1,\"need_xcdn\":1,\"open_time\":\"\",\"pid\":\"411\",\"pidversion\":\"3001\",\"priv_vip_type\":\"6\",\"viptoken\":\"\"},\"userid\":\"123456789\",\"vip\":0}",
+    "params": {
+      "dfid": "syntheticDfid081",
+      "mid": "12345678901234567890123456789012",
+      "uuid": "-",
+      "appid": "1005",
+      "clientver": "20489",
+      "clienttime": "1700000000",
+      "token": "syntheticToken081",
+      "userid": "123456789",
+      "signature": "98dcab5075582e0571601b0b8d71830b"
+    },
+    "router": "tracker.kugou.com",
+    "path": "/v6/priv_url"
+  },
+  {
+    "concept": true,
+    "body": "{\"area_code\":\"1\",\"behavior\":\"play\",\"qualities\":[\"128\",\"320\",\"flac\",\"high\",\"multitrack\",\"viper_atmos\",\"viper_tape\",\"viper_clear\",\"super\"],\"resource\":{\"collect_list_id\":\"3\",\"collect_time\":1700000000123,\"hash\":\"0123456789abcdef0123456789abcdef\",\"id\":0,\"page_id\":1,\"type\":\"audio\"},\"token\":\"syntheticToken081\",\"tracker_param\":{\"all_m\":1,\"auth\":\"\",\"is_free_part\":0,\"key\":\"de5e98e34707b0107180e1ec977befdf\",\"module_id\":0,\"need_climax\":1,\"need_xcdn\":1,\"open_time\":\"\",\"pid\":\"411\",\"pidversion\":\"3001\",\"priv_vip_type\":\"6\",\"viptoken\":\"\"},\"userid\":\"123456789\",\"vip\":0}",
+    "params": {
+      "dfid": "syntheticDfid081",
+      "mid": "12345678901234567890123456789012",
+      "uuid": "-",
+      "appid": "3116",
+      "clientver": "11440",
+      "clienttime": "1700000000",
+      "token": "syntheticToken081",
+      "userid": "123456789",
+      "signature": "943e18c5dc6c14e035577e3a8dfbf95f"
+    },
+    "router": "tracker.kugou.com",
+    "path": "/v6/priv_url"
+  }
+]

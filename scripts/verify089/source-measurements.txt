@@ -1,0 +1,14 @@
+target source_y= 0.45 source_x= 276 / 368
+target source_y= 0.5 source_x= 281 / 368
+target source_y= 0.6 source_x= 287 / 368
+target source_y= 0.7 source_x= 291 / 368
+target source_y= 0.8 source_x= 287 / 368
+target source_y= 0.9 source_x= 276 / 368
+target source_y= 0.96 source_x= 266 / 368
+counter source_y= 0.03 source_x= 150 / 331
+counter source_y= 0.1 source_x= 148 / 331
+counter source_y= 0.18 source_x= 147 / 331
+counter source_y= 0.25 source_x= 149 / 331
+counter source_y= 0.9 source_x= 154 / 331
+counter source_y= 0.96 source_x= 153 / 331
+PASS:13 traced source-coordinate samples reproduced from locked original JPEGs; NOT full-image parity

@@ -1,0 +1,35 @@
+{
+  "baseline": "079",
+  "baseline_sha256": "49433d5437a97e094852f64a8167cab37f6d258d2876fe250437e239695ac1d0",
+  "baseline_files": 2569,
+  "changed": [
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoChestAura.kt",
+      "before": "5754da5da7d83dd5e8ffe223315f7a88affbe61145c2aece8c8664ec91787d5d",
+      "after": "cfc6649c5384e948d6824abeed440f044b30080e66ce0a6a6cb7bca099ff2e24"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoChestStealer.kt",
+      "before": "cf5b45b3f5e30cad398a3f72714aa82883388c94c2aeef7a7f4d94b2165a9750",
+      "after": "a807fc465ddea8ff52b24f8738bacddd42d88574b5f23eeda23306443b4f962b"
+    },
+    {
+      "path": "src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/player/neoraven/ModuleNeoInvManager.kt",
+      "before": "a284cf37e2258252dc3c4bf3651769424762dcdb87c82984f3bb9202945440b0",
+      "after": "7c8b40740df4122c86cfb6ea3021f11e7909b7d95f848fd9ae3d667eebb669a0"
+    }
+  ],
+  "identical_count": 2566,
+  "deleted": [],
+  "added": [
+    "080-NEORAVEN-COMPILE-FIX.md",
+    "scripts/verify080/README.md",
+    "scripts/verify080/audit-package.py",
+    "scripts/verify080/results.txt",
+    "scripts/verify080/run.sh",
+    "scripts/verify080/scope-audit.json",
+    "scripts/verify080/source-check.py"
+  ],
+  "packaged_count": 2576,
+  "protected": "Every baseline file except the three explicit Neo module fixes is byte-identical; all music/KGG, Island, knife, old inventory/chest, ClickGUI, historical tests/docs and logs retained."
+}

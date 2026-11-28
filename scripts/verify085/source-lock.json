@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/Matr1ze/NeoRaven",
+  "commit": "b483ffc576e335e01f2914c920e88289ab090e66",
+  "minecraftSha256": "4508d006323f24fa02876310c192d739af56516eb259000ac50f0909a68c9a2d",
+  "vfpSha256": "790f733029b6ce5a0ea01aa5b50234d3fcfe7438da4c9f7ec9e5b271a43b79d8",
+  "upstream": {
+    "KillAura-settings.json": "f302398c515d55ec32c718a7af81cfa2dbaab2b184760a8e47a5fb674ebbceed",
+    "KillAuraModule.java.txt": "e9641183343fdaf93101dede341344acd071f881904d9ea6f607a14a83bc9174",
+    "PacketUtils.java.txt": "593f105a8fa620947f86489290f66f7456959cead7a3bd3b1cc84382d8ce100c",
+    "PlayerUtils.java.txt": "66f4158f3c1309994a46cd6d0fb0dd8557b364e3def4036d7e63def9891222ed",
+    "KillAura2Flux.java.txt": "8542daf96e953b6dacad388b2ba3bdb158a05e79acbacbf0a080e84058810572",
+    "RotationManager.java.txt": "f3aa6605e19fd98eb68e0f2271034d8d560e0719ae10e480cf53ab2affa9420b",
+    "RotationUtils.java.txt": "7620bdeee9860b70b9ff57d07a4ca69e00931f4ac156f30f35b35de8fed3b117",
+    "KillAura2Module.java.txt": "aa2b854be5c70e5cb01b7dfe388b80008b14d22c733d39ae6df04131bd353936"
+  }
+}

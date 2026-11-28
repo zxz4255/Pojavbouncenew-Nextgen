@@ -1,0 +1,46 @@
+PASS: actual pinned song_url_new.js executed for standard/lite; synthetic independent Node request vectors written
+PASS: 081 production wiring, local-first fallback, account-generation/cancellation, original API failure classification, UI notice, TLS/no-key-persistence/no-spoof guards; pinned upstream source hashes verified
+PASS: 120 KGG cipher assertions: independent Python v1/v2 eKey derivation, Map/RC4 synthetic vectors, pinned v3 fixture byte equality, golden masks, streaming boundaries, malformed/missing keys, bounds, no-overwrite, cancellation and temp cleanup
+scripts/verify079/ProtocolRegression.kt:34:43: warning: unnecessary non-null assertion (!!) on a non-null receiver of type 'String'.
+                val body=json(request.body!!)
+                                          ^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/BilibiliClient.kt:212:39: warning: 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+        val mediaPath = runCatching { URL(safe).path.lowercase() }.getOrDefault("")
+                                      ^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/BilibiliClient.kt:223:36: warning: 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+        val parsed = runCatching { URL(secure) }.getOrElse { throw IOException("B??????????", it) }
+                                   ^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/BilibiliClient.kt:249:26: warning: 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+        val connection = URL(url).openConnection() as HttpURLConnection
+                         ^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/BilibiliClient.kt:294:44: warning: 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+            val connection = runCatching { URL("$WEB/").openConnection() as HttpURLConnection }.getOrNull()
+                                           ^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/KugouClient.kt:40:17: warning: 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+        val c = URL(url).openConnection() as HttpURLConnection
+                ^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicManager.kt:629:63: warning: cast is redundant.
+            if (cause is KugouPlayback.Failure) return (cause as KugouPlayback.Failure).kind == KugouPlayback.FailureKind.NETWORK
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicManager.kt:861:31: warning: elvis operator (?:) always returns the left operand of non-nullable type 'String'.
+        playlistTitle = title ?: ""
+                              ^^^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/MusicManager.kt:1217:26: warning: 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+            connection = URL(url).openConnection() as HttpURLConnection
+                         ^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/NeteaseHttp.kt:55:26: warning: 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+        val connection = URL(url).openConnection() as HttpURLConnection
+                         ^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/NeteaseHttp.kt:113:17: warning: condition is always 'false'.
+            if (name == null || !name.equals("Set-Cookie", ignoreCase = true) || values == null) continue
+                ^^^^^^^^^^^^
+src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/misc/music/NeteaseHttp.kt:113:82: warning: condition is always 'false'.
+            if (name == null || !name.equals("Set-Cookie", ignoreCase = true) || values == null) continue
+                                                                                 ^^^^^^^^^^^^^^
+PASS: 24 protocol scenarios: exact identity/signatures/body, 4 quality mappings, per-quality hashes/audio-id, routes, optional valid, explicit denial/login/network/format/preview errors, lower-quality retry, TLS upgrade, durations and QR identity consistency
+PASS: 18 manager/parser scenarios: account/mode/quality/hash cache isolation, proof integrity, credential persistence, error classification, encrypted-magic vs real content, native preflight rejection, real loopback HTTP POST and download cleanup
+PASS: 8 Island state combinations, 80 disabled return/render cycles: no paint, no mini timer, no hidden clicks/snapshot; track retained; explicit re-enable works
+PASS: 35 KGG integration assertions: local JSON/MMKV keys, double-extension import, source preservation, repeat import, local library identity, no cross-provider fallback, real loopback encrypted download/plaintext cache proof, missing/wrong keys, cancellation and local decode-failure preservation
+PASS: full-screen/module source wiring: persistent Island switch, open leaves it unchanged, non-Island fade/no morph artwork, guarded return; signed account errors preserved, encrypted-body standard-stream retry wired
+PASS: 079 source wiring: local import/list UI, native preflight, no local deletion/fallback/remote lyrics, online decrypt before plaintext cache proof
+PASS: 081 144 assertions: exact upstream standard/lite wire vectors, strict authorization/hash/preview/size/key guards, cancellation/account-change, local-first automatic online lookup and synthetic byte-exact decrypt; no live account/network/native audio test

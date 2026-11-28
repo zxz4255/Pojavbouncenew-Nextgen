@@ -1,0 +1,21 @@
+PASS: production diff is exactly one EventState import and two private world -> sessionWorld identifier renames; no logic/settings changes.
+PASS: temporary fixtures now inherit the ACTUAL MinecraftShortcuts and resolve EventState from its ACTUAL parent package; historical075/076 fixtures remain unchanged.
+PASS: original079 sources reproduce all three reported compiler errors with corrected host fixtures.
+PASS: all three actual patched modules compile against MC26.3, actual MinecraftShortcuts and EventState enum extracted from the real event package (other LB/HUD hosts are fixtures).
+Generated upstream oracle: original slotsToSteal + wantedCategory + isTrash + best-* bodies; toy item/score adapters.
+PASS: 16384 randomized 27/54-slot chests over all 1024 toggle combinations match actual pinned upstream Java filtering methods (toy scored items).
+PASS: ties/inventory equality, Instant and IgnoreTrash overrides, golden-apple/rod rules and legacy scores.
+PASS: min/max delay normalization, bounded jitter, original multilingual blocked names and Hypixel lobby/queue projections.
+PASS: Aura 80/100/1200ms boundaries, stable/changed target timing, confirmation-only marking, close cooldown, enable history, respawn/world isolation.
+PASS: normal deadlines/order/completion, Instant same-call 54-click bound, empty-shell guard, repeat-snapshot idempotence, integrity/AutoClose, replacement close, identity-switch and mid-batch closure.
+NOT tested here: full Gradle/game/Mixin application, actual server acknowledgements, mobile UI/rendering, live rotations or packet-cancellation ordering.
+Generated original pinned InvManager2 sortClick/moveBest/matchesKind/score/isSplashPotion oracle; toy item adapters.
+PASS: 240000 category/score comparisons against unchanged pinned upstream Java match/score bodies (modeled items).
+PASS: reproduced upstream tie churn; destination ties, duplicate destinations/types, missing categories and first-owner allocation now converge.
+PASS: 12000 randomized inventories with ties/overlapping categories/duplicate targets/pinned slots converge; 60111 swaps conserve every modeled stack.
+PASS: 1296 full-inventory armor exchanges conserve equipment, restore scratch hotbar, avoid cursor/THROW, preserve offhand; equal armor never churns.
+PASS: 2016 partial-stack merges conserve exact component IDs/cursor; all 64 discard guards, illegal slots/buttons/armor/offhand protection and explicit whole-stack THROW accounting.
+PASS: 250ms/two-distinct-tick settle floor, no same-tick burst, prediction no-op failure, late/early server rollback, repeated-state circuit breaker and explicit session reset. Settlement is NOT a server acknowledgement.
+PASS: equal shears retained; strict-better-only duplicate candidate test (actual discard still requires explicit allowlist).
+NOT proven: real MC item-component binding, applied Mixins, multiplayer/Via acceptance, live GUI or Android/Pojav. No full build/runtime claim.
+PASS: 080 focused regression complete. No full Gradle, game/server, applied Mixin or Pojav claim.

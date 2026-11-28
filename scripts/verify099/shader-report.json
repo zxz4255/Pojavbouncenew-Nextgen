@@ -1,0 +1,22 @@
+{
+  "gl_context": "llvmpipe (LLVM 19.1.7, 256 bits) | 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+  "hud_and_music_max_rgba_diff": {
+    "hud_target": 0.0,
+    "hud_counter": 0.0,
+    "hud_soft": 0.0,
+    "music_quiet": 0.0
+  },
+  "volumetric_bloom_luma_profile": {
+    "capsule_center": 0.62419,
+    "capsule_inner_edge": 0.56054,
+    "outside_2px": 0.36891,
+    "outside_8px": 0.31153,
+    "outside_16px": 0.2905,
+    "outside_28px": 0.28,
+    "background": 0.28,
+    "panel_center": 0.28499,
+    "chroma_rgb_span": 0.00333,
+    "padded_quad_edge_jump": 0.0
+  },
+  "status": "PASS"
+}

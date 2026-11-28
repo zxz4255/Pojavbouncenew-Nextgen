@@ -1,0 +1,6 @@
+PASS: pinned official MC26.3 client SHA256
+PASS: immutable083 software-pointer negative-source control; patched helper has no rendering/coordinate synthesis and no draw hook
+PASS: complete native-only helper and verbatim retained cursor hooks compiled against actual MC26.3/SDL/Mixin APIs
+PASS: 084 real MC26.3 API/bytecode 76 checks; 3 native-state hook signatures, zero cursor drawing hooks; compiled helper contains no drawing/bitmap/synthetic input/coordinate remap; only native SDL visibility+relative mode. Not full Mixin application.
+PASS: 084 Android native-only 20036 assertions, 2000 GUI/focus/close cycles: native ShowCursor/relative-mode recovery only; no-GUI/unfocused/hidden-screen no side effects; mouse coordinates untouched by helper; native refusal gets no substitute. Runtime hosts are fixtures, not Android hardware.
+PASS: 084 desktop 4 assertions: visible GUI remains untouched

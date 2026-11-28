@@ -1,0 +1,1 @@
+PASS: 44 JVM assertions across real compiled LightPollutionGlassSurface, ClickGuiGlassSurface, UiPalette, ModernGuiSurface, SwitchWidget, and OnyxUI.

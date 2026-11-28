@@ -1,0 +1,1 @@
+PASS: {"checks": 421, "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)", "interior_alpha_max": 0, "cases": "84 size/radius/scale combinations including fractional geometry, exact zero interior, bounded black alpha, finite support, monotone exterior profile", "scope": "Production GLSL in EGL. Image includes software-composited shell, not full Opai/Minecraft/Android rendering."}
